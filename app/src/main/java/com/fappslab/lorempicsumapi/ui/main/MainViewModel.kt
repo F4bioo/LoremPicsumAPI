@@ -20,9 +20,9 @@ constructor(
     private val _getPhotosEvent = MutableLiveData<DataState<List<Photo>>>()
     val getPhotosEvent: LiveData<DataState<List<Photo>>> get() = _getPhotosEvent
 
-    fun getPhotos(page: Int, limit: Int) {
+    fun getPhotos(page: Int = 1, limit: Int = 10) {
         viewModelScope.launch {
-            _getPhotosEvent.value = getPhotos.invoke(GetPhotos.Params(page, limit))
+            _getPhotosEvent.value = getPhotos.invoke(GetPhotos.Params(page = page, limit = limit))
         }
     }
 }

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Lorem Picsum API</string>
+
+    <!-- Accessibility -->
+    <string name="desc_favorite">Favorite button</string>
+
+    <!-- Splash -->
+    <string name="sub_title_splash">The Lorem Ipsum for photos.</string>
+    <string name="title_splash">Lorem Picsum</string>
+    <string name="text_bottom_splash">challenge</string>
+    <string name="error_splash">Oops! Unable to load data.</string>
+
+    <!-- Main -->
+    <string name="try_again">Try again</string>
+
+    <!-- Details -->
+    <string name="source">Picsum</string>
+
 </resources>

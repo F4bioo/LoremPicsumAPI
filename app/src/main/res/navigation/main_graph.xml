@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.splash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+
+        <argument
+            android:name="mainArgs"
+            app:argType="com.fappslab.lorempicsumapi.data.model.Photos"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.details.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details">
+
+        <argument
+            android:name="detailsArgs"
+            app:argType="com.fappslab.lorempicsumapi.data.model.Photo"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_detailsFragment_to_modalFragment"
+            app:destination="@id/modalFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/modalFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.modal.ModalFragment"
+        android:label="ModalFragment"
+        tools:layout="@layout/fragment_modal">
+
+        <argument
+            android:name="detailsArgs"
+            app:argType="com.fappslab.lorempicsumapi.data.model.Photo"
+            app:nullable="true" />
+    </dialog>
+
+</navigation>

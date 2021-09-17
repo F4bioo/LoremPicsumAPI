@@ -3,19 +3,22 @@ package com.fappslab.lorempicsumapi.ui.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.databinding.AdapterItemViewBinding
+import com.fappslab.lorempicsumapi.utils.extensions.set
+
 
 class MainAdapter(
     private val onClickListener: (photo: Photo) -> Unit
 ) : ListAdapter<Photo, MainAdapter.ViewHolder>(MainAdapter) {
 
     private val photos = arrayListOf<Photo>()
+    private val differ = AsyncListDiffer(this, MainAdapter)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val biding = AdapterItemViewBinding.inflate(
@@ -27,6 +30,8 @@ class MainAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val photo = photos[position]
         holder.viewBiding(photo)
+
+        println("<> ${differ.currentList.size}")
     }
 
     override fun getItemCount() = photos.size
@@ -37,8 +42,8 @@ class MainAdapter(
     ) : RecyclerView.ViewHolder(biding.root) {
 
         fun viewBiding(photo: Photo) {
-            biding.run {
-                imagePhoto.set(photo.download_url)
+            biding.apply {
+                imagePhoto.set(photo.downloadUrl)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
 
@@ -52,6 +57,7 @@ class MainAdapter(
     override fun submitList(list: MutableList<Photo>?) {
         super.submitList(list?.let {
             photos.addAll(it)
+            differ.submitList(photos)
             it
         })
     }
@@ -66,12 +72,8 @@ class MainAdapter(
         }
     }
 
-    private fun ImageView.set(imageUrl: String) {
-        Glide.with(this)
-            .load(imageUrl)
-            .placeholder(R.drawable.ic_image_placeholder)
-            .error(R.drawable.ic_image_error)
-            .centerCrop()
-            .into(this)
+    private fun ImageView.set(@DrawableRes icon: Int, color: Int) {
+        setImageResource(icon)
+        setColorFilter(color)
     }
 }

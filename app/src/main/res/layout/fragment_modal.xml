@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modal_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:paddingBottom="32dp"
+    tools:background="#1E1E1E"
+    tools:context=".ui.main.MainActivity">
+
+    <View
+        android:id="@+id/view_drag"
+        android:layout_width="100dp"
+        android:layout_height="3dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="#BCBCBC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_normal"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="@dimen/modal_buttons"
+        android:layout_height="@dimen/modal_buttons"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:theme="@style/ModalTopButton"
+        app:icon="@drawable/ic_default"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/flow_container_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flow_container_top"
+        app:shapeAppearance="@style/roundedStyle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_grayscale"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="@dimen/modal_buttons"
+        android:layout_height="@dimen/modal_buttons"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:theme="@style/ModalTopButton"
+        app:icon="@drawable/ic_grayscale"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_normal"
+        app:layout_constraintStart_toEndOf="@+id/button_normal"
+        app:layout_constraintTop_toTopOf="@+id/button_normal"
+        app:shapeAppearance="@style/roundedStyle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_blur"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="@dimen/modal_buttons"
+        android:layout_height="@dimen/modal_buttons"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:theme="@style/ModalTopButton"
+        app:icon="@drawable/ic_blur"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_normal"
+        app:layout_constraintStart_toEndOf="@+id/button_grayscale"
+        app:layout_constraintTop_toTopOf="@+id/button_normal"
+        app:shapeAppearance="@style/roundedStyle" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_container_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:constraint_referenced_ids="button_normal, button_grayscale, button_blur"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_drag" />
+
+    <TextView
+        android:id="@+id/text_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:textColor="#fff"
+        app:drawableStartCompat="@drawable/ic_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_author"
+        tools:text="#1004" />
+
+    <TextView
+        android:id="@+id/text_square"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:textColor="#fff"
+        app:drawableStartCompat="@drawable/ic_square_foot"
+        app:layout_constraintStart_toStartOf="@+id/text_id"
+        app:layout_constraintTop_toBottomOf="@+id/text_id"
+        tools:text="5616x3744" />
+
+    <TextView
+        android:id="@+id/text_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/source"
+        android:textColor="#fff"
+        app:drawableEndCompat="@drawable/ic_source"
+        app:layout_constraintEnd_toEndOf="@+id/button_author"
+        app:layout_constraintTop_toBottomOf="@+id/button_author" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_author"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:theme="@style/ModalTopButton"
+        app:backgroundTint="#B23A3A3A"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/ic_camera"
+        app:iconTint="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flow_container_top"
+        tools:text="Greg Rakozy" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_download"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="@dimen/modal_buttons"
+        android:layout_height="@dimen/modal_buttons"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:theme="@style/ModalBottomButton"
+        app:icon="@drawable/ic_download"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/flow_container_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flow_container_bottom"
+        app:shapeAppearance="@style/roundedStyle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_share"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="@dimen/modal_buttons"
+        android:layout_height="@dimen/modal_buttons"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:theme="@style/ModalBottomButton"
+        app:icon="@drawable/ic_share"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_download"
+        app:layout_constraintStart_toEndOf="@+id/button_download"
+        app:layout_constraintTop_toTopOf="@+id/button_download"
+        app:shapeAppearance="@style/roundedStyle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_favorite"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="@dimen/modal_buttons"
+        android:layout_height="@dimen/modal_buttons"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:theme="@style/ModalBottomButton"
+        app:icon="@drawable/ic_favorite_unselected"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_download"
+        app:layout_constraintStart_toEndOf="@+id/button_share"
+        app:layout_constraintTop_toTopOf="@+id/button_download"
+        app:shapeAppearance="@style/roundedStyle" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_container_bottom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:constraint_referenced_ids="button_download, button_share, button_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_source" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

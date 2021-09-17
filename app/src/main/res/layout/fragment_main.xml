@@ -2,44 +2,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frame_root"
+    android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.main.MainActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_photos"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_photos"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="none"
+        android:splitMotionEvents="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_photos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingStart="0dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="8dp"
-                android:scrollbars="none"
-                android:splitMotionEvents="false"
-                tools:listitem="@layout/adapter_item_view" />
-
-        </FrameLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/adapter_item_view" />
 
     <ProgressBar
         android:id="@+id/progress_photos"
