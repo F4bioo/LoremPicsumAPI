@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface Api {
+interface ApiService {
     @GET("/v2/list")
     suspend fun getPhotos(
         @Query("page") page: Int,

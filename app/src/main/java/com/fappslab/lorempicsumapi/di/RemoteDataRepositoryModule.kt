@@ -2,7 +2,7 @@ package com.fappslab.lorempicsumapi.di
 
 import com.fappslab.lorempicsumapi.data.repository.RemoteDataRepository
 import com.fappslab.lorempicsumapi.data.repository.Repository
-import com.fappslab.lorempicsumapi.data.api.Api
+import com.fappslab.lorempicsumapi.data.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ object RemoteDataRepositoryModule {
     @Singleton
     @Provides
     fun provideRemoteDataRepository(
-        api: Api
+        api: ApiService
     ): Repository.RemoteData {
         return RemoteDataRepository(api)
     }

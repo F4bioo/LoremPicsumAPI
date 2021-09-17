@@ -1,7 +1,7 @@
 package com.fappslab.lorempicsumapi.di
 
 import com.fappslab.lorempicsumapi.BuildConfig
-import com.fappslab.lorempicsumapi.data.api.Api
+import com.fappslab.lorempicsumapi.data.api.ApiService
 import com.fappslab.lorempicsumapi.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -63,11 +63,11 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideApi(
+    fun provideApiService(
         retrofit: Retrofit.Builder
-    ): Api {
+    ): ApiService {
         return retrofit
             .build()
-            .create(Api::class.java)
+            .create(ApiService::class.java)
     }
 }
