@@ -20,7 +20,7 @@ constructor(
 
                 is DataState.OnSuccess -> response.data?.let { DataState.OnSuccess(it) }
                 is DataState.OnException -> DataState.OnException(response.e)
-                is DataState.OnError -> DataState.OnError(response.error)
+                is DataState.OnError -> DataState.OnError(response.errorBody, response.code)
             }
         } catch (e: Exception) {
             DataState.OnException(e)

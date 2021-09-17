@@ -8,11 +8,22 @@
     android:fitsSystemWindows="false"
     tools:context=".ui.main.MainActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_photos"
+        style="?attr/indeterminateProgressStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_bar" />
+
     <ImageView
         android:id="@+id/image_photo"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,42 +31,38 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/backgrounds/scenic" />
 
-    <ImageView
+    <View
+        android:id="@+id/view_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        app:layout_constraintBottom_toBottomOf="@+id/image_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_back" />
+
+    <ImageButton
         android:id="@+id/image_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
+        android:contentDescription="@string/desc_back"
         android:padding="16dp"
         android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="#9A5E5E5E" />
+        app:tint="#CDFFFFFF" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/image_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
+        android:contentDescription="@string/desc_menu"
         android:padding="16dp"
-        android:src="@drawable/ic_eye"
+        android:src="@drawable/ic_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="#9A5E5E5E" />
-
-    <ProgressBar
-        android:id="@+id/progress_photos"
-        style="?attr/indeterminateProgressStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
+        app:tint="#CDFFFFFF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

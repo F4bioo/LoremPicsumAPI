@@ -4,13 +4,11 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.fappslab.lorempicsumapi.R
+
 
 fun ImageView.set(imageUrl: String) {
     Glide.with(this)
         .load(imageUrl)
-        .placeholder(R.drawable.ic_image_placeholder)
-        .error(R.drawable.ic_image_error)
         .centerCrop()
         .into(this)
 }

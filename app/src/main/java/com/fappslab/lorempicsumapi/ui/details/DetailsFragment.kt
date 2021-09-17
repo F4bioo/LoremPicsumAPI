@@ -1,5 +1,6 @@
 package com.fappslab.lorempicsumapi.ui.details
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,10 @@ class DetailsFragment : Fragment() {
             viewBinding()
             initListeners()
             initObserver()
+
+            view.postDelayed({
+                openModal()
+            }, 600)
         }
     }
 
@@ -82,11 +87,17 @@ class DetailsFragment : Fragment() {
             }
 
             imageMenu.setOnClickListener {
-                val directions =
-                    DetailsFragmentDirections.actionDetailsFragmentToModalFragment(photo)
-                findNavController().navigateWithAnimations(directions)
+                openModal()
             }
         }
+    }
+
+    private fun openModal() {
+        photo.bitmap = (binding.imagePhoto.drawable as BitmapDrawable).bitmap
+
+        val directions =
+            DetailsFragmentDirections.actionDetailsFragmentToModalFragment(photo)
+        findNavController().navigateWithAnimations(directions)
     }
 
     private fun hideSystemUI() {

@@ -34,9 +34,17 @@ class MainFragment : Fragment() {
     private var dy = 0
 
     private val mainAdapter by lazy {
-        MainAdapter { photo ->
-            val directions = MainFragmentDirections.actionMainFragmentToDetailsFragment(photo)
-            findNavController().navigateWithAnimations(directions)
+        MainAdapter { view, photo ->
+            when (view.id) {
+                R.id.card_root -> {
+                    val directions =
+                        MainFragmentDirections.actionMainFragmentToDetailsFragment(photo)
+                    findNavController().navigateWithAnimations(directions)
+                }
+                R.id.check_favorite -> {
+
+                }
+            }
         }
     }
 
@@ -52,9 +60,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         args.mainArgs?.let {
-            if (mainAdapter.itemCount == 0) {
-                mainAdapter.submitList(it.photos.toMutableList())
-            }
+            mainAdapter.submitList(it.photos.toMutableList())
         }
         showSystemUI()
         initObserver()
@@ -75,9 +81,7 @@ class MainFragment : Fragment() {
                     mainAdapter.submitList(dataState.data.toMutableList())
                     binding.progressPhotos.isVisible = false
                 }
-                is DataState.OnError -> {
-                }
-                is DataState.OnException -> showError()
+                else -> showError()
             }
         }
     }

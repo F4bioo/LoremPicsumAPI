@@ -18,6 +18,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/progress_photos"
+            style="?attr/indeterminateProgressStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/image_photo"
+            app:layout_constraintEnd_toEndOf="@+id/image_photo"
+            app:layout_constraintStart_toStartOf="@+id/image_photo"
+            app:layout_constraintTop_toTopOf="@+id/image_photo" />
+
         <ImageView
             android:id="@+id/image_photo"
             android:layout_width="0dp"
@@ -54,6 +64,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_author"
             tools:text="#1011" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/check_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/favorite_selector"
+            android:translationX="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:checked="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

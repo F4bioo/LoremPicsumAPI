@@ -3,6 +3,8 @@
 
     <!-- Accessibility -->
     <string name="desc_favorite">Favorite button</string>
+    <string name="desc_back">Back</string>
+    <string name="desc_menu">Menu</string>
 
     <!-- Splash -->
     <string name="sub_title_splash">The Lorem Ipsum for photos.</string>
@@ -14,6 +16,15 @@
     <string name="try_again">Try again</string>
 
     <!-- Details -->
-    <string name="source">Picsum</string>
+    <string name="source">Unsplash</string>
+
+    <!-- Modal -->
+    <string name="request_permission">This app cannot save photos without Permission.</string>
+    <string name="error_try_again">Something went wrong. Try again.</string>
+    <string name="saved">Saved.</string>
+    <string name="share_title">Share photo</string>
+    <string name="share_photo">Hi, I hope you like this picture from Unsplash.
+        \n\n%s
+    </string>
 
 </resources>

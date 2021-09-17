@@ -1,24 +1,21 @@
 package com.fappslab.lorempicsumapi.data.state
 
-import com.fappslab.lorempicsumapi.data.model.Error
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 sealed class DataState<out R> {
     data class OnSuccess<out T>(val data: T) : DataState<T>()
-    data class OnError(val error: Error) : DataState<Nothing>()
+    data class OnError(val errorBody: ResponseBody?, var code: Int) : DataState<Nothing>()
     data class OnException(val e: Exception) : DataState<Nothing>()
 }
 
 fun <T : Any> Response<T?>?.parseResponse(): DataState<T?> {
     return try {
         when (this) {
-            null -> throw NullPointerException("response is null!")
+            null -> throw NullPointerException("Response is null!")
             else -> when (isSuccessful) {
                 true -> DataState.OnSuccess(body())
-                else -> {
-                    val error = Error.getError(errorBody(), code())
-                    DataState.OnError(error)
-                }
+                else -> DataState.OnError(errorBody(), code())
             }
         }
     } catch (e: Exception) {

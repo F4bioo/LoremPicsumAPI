@@ -1,5 +1,6 @@
 package com.fappslab.lorempicsumapi.data.model
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -14,5 +15,6 @@ data class Photo(
     @SerializedName("download_url")
     val downloadUrl: String,
     var grayScale: Float = 1f,
-    var favorite: Boolean = false
+    var favorite: Boolean = false,
+    var bitmap: Bitmap? = null
 ) : Parcelable

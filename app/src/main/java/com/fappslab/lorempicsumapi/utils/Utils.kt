@@ -1,9 +1,8 @@
 package com.fappslab.lorempicsumapi.utils
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.fappslab.lorempicsumapi.R
 
 object Utils {
@@ -21,4 +20,12 @@ object Utils {
     fun blurUrl(id: String, width: Int = width(), height: Int = height()): String {
         return "https://picsum.photos/id/$id/$width/$height?blur=10"
     }
+
+    fun Context.share(url: String) =
+        startActivity(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_photo, url))
+            type = "text/plain"
+            Intent.createChooser(this, getString(R.string.share_title))
+        })
 }

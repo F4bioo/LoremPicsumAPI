@@ -1,9 +1,8 @@
 package com.fappslab.lorempicsumapi.ui.main
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,7 +13,7 @@ import com.fappslab.lorempicsumapi.utils.extensions.set
 
 
 class MainAdapter(
-    private val onClickListener: (photo: Photo) -> Unit
+    private val onClickListener: (view: View, photo: Photo) -> Unit
 ) : ListAdapter<Photo, MainAdapter.ViewHolder>(MainAdapter) {
 
     private val photos = arrayListOf<Photo>()
@@ -29,26 +28,31 @@ class MainAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val photo = photos[position]
+        //println("<> AAA id: ${photo.id} - s2: ${photo.favorite}")
         holder.viewBiding(photo)
 
-        println("<> ${differ.currentList.size}")
     }
 
     override fun getItemCount() = photos.size
 
     inner class ViewHolder(
         private val biding: AdapterItemViewBinding,
-        private val onClickListener: (photo: Photo) -> Unit
+        private val onClickListener: (view: View, photo: Photo) -> Unit
     ) : RecyclerView.ViewHolder(biding.root) {
 
         fun viewBiding(photo: Photo) {
             biding.apply {
                 imagePhoto.set(photo.downloadUrl)
                 textAuthor.text = photo.author
-                textId.text = String.format("#%s", photo.id)
+                checkFavorite.isChecked = photo.favorite
 
                 cardRoot.setOnClickListener {
-                    onClickListener(photo)
+                    onClickListener(cardRoot, photo)
+                }
+
+                checkFavorite.setOnCheckedChangeListener { buttonView, isChecked ->
+                    photo.favorite = isChecked
+                    onClickListener(buttonView, photo)
                 }
             }
         }
@@ -70,10 +74,5 @@ class MainAdapter(
         override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
             return oldItem == newItem
         }
-    }
-
-    private fun ImageView.set(@DrawableRes icon: Int, color: Int) {
-        setImageResource(icon)
-        setColorFilter(color)
     }
 }

@@ -36,6 +36,11 @@
         <item name="colorOnSurface">#333333</item>
     </style>
 
+    <style name="FavoriteButton" parent="@style/Widget.MaterialComponents.Button">
+        <item name="colorPrimary">#E22932</item>
+        <item name="colorOnSurface">#BF5B5F</item>
+    </style>
+
     <!-- BottomSheetDialog -->
     <style name="BottomSheetDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="android:windowIsFloating">true</item>
