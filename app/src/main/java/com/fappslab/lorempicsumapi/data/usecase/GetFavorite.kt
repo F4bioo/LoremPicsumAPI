@@ -15,7 +15,7 @@ constructor(
 
     override suspend fun invoke(params: Params): DataState<Photo> {
         return try {
-            DataState.OnSuccess(repository.photo(params.id).toPhoto())
+            DataState.OnSuccess(repository.getFavorite(params.id).toPhoto())
         } catch (e: Exception) {
             DataState.OnException(e)
         }

@@ -1,4 +1,4 @@
-package com.fappslab.lorempicsumapi.ui.modal
+package com.fappslab.lorempicsumapi.ui.viewmodel
 
 import android.content.Context
 import android.graphics.Bitmap

@@ -7,9 +7,10 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.fappslab.lorempicsumapi.ui.splash.SplashFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.fragment.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
+
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -19,7 +20,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.fappslab.lorempicsumapi.ui.main.MainFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.fragment.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
 
@@ -31,11 +32,15 @@
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.fappslab.lorempicsumapi.ui.details.DetailsFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.fragment.DetailsFragment"
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details">
 
@@ -51,7 +56,7 @@
 
     <dialog
         android:id="@+id/modalFragment"
-        android:name="com.fappslab.lorempicsumapi.ui.modal.ModalFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.fragment.ModalFragment"
         android:label="ModalFragment"
         tools:layout="@layout/fragment_modal">
 
@@ -60,5 +65,21 @@
             app:argType="com.fappslab.lorempicsumapi.data.model.Photo"
             app:nullable="true" />
     </dialog>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.fappslab.lorempicsumapi.ui.fragment.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites">
+
+        <argument
+            android:name="favoritesArgs"
+            app:argType="com.fappslab.lorempicsumapi.data.model.Photos"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
 </navigation>

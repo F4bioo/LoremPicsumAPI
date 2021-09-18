@@ -1,4 +1,4 @@
-package com.fappslab.lorempicsumapi.ui.main
+package com.fappslab.lorempicsumapi.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:paddingBottom="32dp"
     tools:background="#1E1E1E"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <View
         android:id="@+id/view_drag"

@@ -9,11 +9,14 @@ import com.fappslab.lorempicsumapi.data.model.PhotoEntity
 @Dao
 interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(photo: PhotoEntity): Long
+    suspend fun setFavorite(photo: PhotoEntity): Long
+
+    @Query("DELETE FROM photo WHERE id = :id")
+    suspend fun deleteFavorite(id: Long): Int
 
     @Query("SELECT * FROM photo WHERE id = :id")
-    suspend fun photo(id: Long): PhotoEntity
+    suspend fun getFavorite(id: Long): PhotoEntity
 
-    @Query("SELECT * FROM photo")
-    suspend fun photos(): List<PhotoEntity>
+    @Query("SELECT * FROM photo WHERE favorite = 1")
+    suspend fun getFavorites(): List<PhotoEntity>
 }

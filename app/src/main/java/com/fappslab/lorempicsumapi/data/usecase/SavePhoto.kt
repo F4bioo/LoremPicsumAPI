@@ -8,6 +8,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.utils.BaseUseCase
+import com.fappslab.lorempicsumapi.utils.Constants
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -31,7 +32,7 @@ constructor() : BaseUseCase.Params<DataState<Void?>, SavePhoto.Params> {
     )
 
     private fun saveImage(context: Context, bitmap: Bitmap?) {
-        val image = "/Lorem-Picsum${System.currentTimeMillis()}.jpg"
+        val image = "${Constants.IMAGE_FILE}${System.currentTimeMillis()}.jpg"
 
         val stream = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val resolver = context.contentResolver

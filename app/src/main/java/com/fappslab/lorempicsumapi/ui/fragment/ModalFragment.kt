@@ -1,4 +1,4 @@
-package com.fappslab.lorempicsumapi.ui.modal
+package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.Manifest
 import android.content.Intent
@@ -17,6 +17,7 @@ import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentModalBinding
+import com.fappslab.lorempicsumapi.ui.viewmodel.ModalViewModel
 import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.Utils.share
 import com.fappslab.lorempicsumapi.utils.extensions.setNavigationResult
@@ -67,14 +68,6 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
             if (dataState is DataState.OnSuccess) {
                 photo.favorite = dataState.data.favorite
                 setFavoriteIcon(photo.favorite)
-            } else {
-            }
-        }
-
-        viewModel.insertEvent.observe(viewLifecycleOwner) { dataState ->
-            if (dataState is DataState.OnSuccess) {
-
-            } else {
             }
         }
 

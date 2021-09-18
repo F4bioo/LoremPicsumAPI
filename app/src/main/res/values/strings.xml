@@ -3,6 +3,7 @@
 
     <!-- Accessibility -->
     <string name="desc_favorite">Favorite button</string>
+    <string name="desc_favorites">Favorites button</string>
     <string name="desc_back">Back</string>
     <string name="desc_menu">Menu</string>
 
@@ -24,7 +25,10 @@
     <string name="saved">Saved.</string>
     <string name="share_title">Share photo</string>
     <string name="share_photo">Hi, I hope you like this picture from Unsplash.
-        \n\n%s
-    </string>
+        \n\n%s</string>
+
+    <!-- Favorites -->
+    <string name="text_empty_list">You have no favorites here</string>
+    <string name="sub_text_empty_list">Tap on ♥ button to add a new favorite.</string>
 
 </resources>

@@ -16,7 +16,7 @@ constructor(
     override suspend fun invoke(params: Params): DataState<List<Photo>>? {
         return try {
             when (val response =
-                repository.getPhotos(page = params.page, limit = params.limit).parseResponse()) {
+                repository.getPhotos(page = params.page).parseResponse()) {
 
                 is DataState.OnSuccess -> response.data?.let { DataState.OnSuccess(it) }
                 is DataState.OnException -> DataState.OnException(response.e)
@@ -28,7 +28,6 @@ constructor(
     }
 
     data class Params(
-        val page: Int,
-        val limit: Int
+        val page: Int
     )
 }

@@ -1,4 +1,4 @@
-package com.fappslab.lorempicsumapi.extension
+package com.fappslab.lorempicsumapi.utils.extensions
 
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
