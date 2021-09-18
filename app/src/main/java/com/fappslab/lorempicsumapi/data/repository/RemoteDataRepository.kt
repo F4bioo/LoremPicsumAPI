@@ -1,7 +1,7 @@
 package com.fappslab.lorempicsumapi.data.repository
 
-import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.api.ApiService
+import com.fappslab.lorempicsumapi.data.model.Photo
 import retrofit2.Response
 import javax.inject.Inject
 

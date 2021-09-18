@@ -12,5 +12,5 @@ object Constants {
 
     // Numbers
     const val RC_PERMISSION = 489
-    const val PAGE_LIMIT = 10
+    const val PAGE_SIZE = 10
 }

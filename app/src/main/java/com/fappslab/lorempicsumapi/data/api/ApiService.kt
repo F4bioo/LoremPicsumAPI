@@ -10,6 +10,6 @@ interface ApiService {
     @GET("/v2/list")
     suspend fun getPhotos(
         @Query("page") page: Int,
-        @Query("limit") limit: Int = Constants.PAGE_LIMIT
+        @Query("limit") limit: Int = Constants.PAGE_SIZE
     ): Response<List<Photo>?>?
 }

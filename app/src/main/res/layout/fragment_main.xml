@@ -46,7 +46,7 @@
         app:tint="#FFFFFF" />
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/in_empty"
         layout="@layout/empty_list"
         android:visibility="gone" />
 

@@ -9,14 +9,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
-import com.fappslab.lorempicsumapi.ui.adapter.PhotoAdapter
+import com.fappslab.lorempicsumapi.ui.adapter.RemoteDataAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
@@ -30,12 +28,10 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by viewModels()
-    private val args: MainFragmentArgs by navArgs()
-    private var page = 2
-    private var dy = 0
+    private var y = 0
 
-    private val photoAdapter by lazy {
-        PhotoAdapter { view, photo, _ ->
+    private val adapter by lazy {
+        RemoteDataAdapter { view, photo, _ ->
             when (view.id) {
                 R.id.card_root -> {
                     val directions =
@@ -61,19 +57,11 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        args.mainArgs?.let {
-            if (photoAdapter.itemCount == 0) {
-                val photos = it.photos.toMutableList()
-                photoAdapter.submitList(photos)
-            }
-        }
-
         requireActivity().showSystemUI(view)
         initObserver()
         initRecyclerView()
         initListeners()
         handleOnBackPressed()
-        emptyLayout()
     }
 
     override fun onDestroyView() {
@@ -82,31 +70,23 @@ class MainFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.getPhotosEvent.observe(viewLifecycleOwner) { dataState ->
-            binding.progressPhotos.isVisible = false
-
-            when (dataState) {
-                is DataState.OnSuccess -> {
-                    val photos = dataState.data.distinct().toMutableList()
-                    photoAdapter.submitList(photos)
-                }
-                else -> showError()
-            }
+        viewModel.pagingEvent.observe(viewLifecycleOwner) { pagingData ->
+            adapter.submitData(lifecycle, pagingData)
         }
 
+        // On Result Observer
         findNavController().currentBackStackEntry?.savedStateHandle
-            ?.getLiveData<List<Photo>>(Constants.FAVORITE_RESULT)?.observe(
-                viewLifecycleOwner
-            ) { bundle ->
-                println("<> bundle: ${bundle.size}")
+            ?.getLiveData<List<Photo>>(Constants.FAVORITE_RESULT)?.observe(viewLifecycleOwner) {
+
             }
     }
 
     private fun initRecyclerView() {
-        binding.recyclerPhotos.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            adapter = photoAdapter
+        binding.apply {
+            recyclerPhotos.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            recyclerPhotos.setHasFixedSize(true)
+            recyclerPhotos.adapter = adapter
         }
     }
 
@@ -114,13 +94,7 @@ class MainFragment : Fragment() {
         binding.apply {
             recyclerPhotos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (hasBottomReached(dy)) {
-                        // Has reached last item
-                        // Increase page size
-                        progressPhotos.isVisible = true
-                        page++
-                        viewModel.getPhotos(page)
-                    }
+                    y = dy
                 }
             })
 
@@ -128,8 +102,6 @@ class MainFragment : Fragment() {
                 findNavController()
                     .navigateWithAnimations(R.id.action_mainFragment_to_favoritesFragment)
             }
-
-            recyclerPhotos.onFlingListener
         }
     }
 
@@ -141,22 +113,16 @@ class MainFragment : Fragment() {
         )
         snackBar.setAction(getString(R.string.try_again)) {
             snackBar.dismiss()
-            viewModel.getPhotos(page)
+            viewModel.getPhotos()
         }.show()
     }
 
     private fun hasTopReached(): Boolean {
-        return !binding.recyclerPhotos.canScrollVertically(-1) && dy < 0
+        return !binding.recyclerPhotos.canScrollVertically(-1) && y < 0
     }
 
-    private fun hasBottomReached(dy: Int): Boolean {
-        this.dy = dy
-        return !binding.recyclerPhotos.canScrollVertically(1) && dy > 0
-    }
-
-    private fun emptyLayout() {
-        binding.include.emptyRoot.isVisible =
-            photoAdapter.itemCount == 0
+    private fun emptyLayout(isEmpty: Boolean) {
+        binding.inEmpty.emptyRoot.isVisible = isEmpty
     }
 
     private fun handleOnBackPressed() {

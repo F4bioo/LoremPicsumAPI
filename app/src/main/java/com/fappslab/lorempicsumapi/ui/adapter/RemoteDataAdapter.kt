@@ -3,21 +3,29 @@ package com.fappslab.lorempicsumapi.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
 import com.fappslab.lorempicsumapi.utils.extensions.set
 
-
-class PhotoAdapter(
+class RemoteDataAdapter(
     private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
-) : ListAdapter<Photo, PhotoAdapter.ViewHolder>(PhotoAdapter) {
+) : PagingDataAdapter<Photo, RemoteDataAdapter.ViewHolder>(RemoteDataAdapter) {
 
-    private val photos = arrayListOf<Photo>()
-    private val differ = AsyncListDiffer(this, PhotoAdapter)
+    private val differ = AsyncListDiffer(this, RemoteDataAdapter)
+
+    private companion object : DiffUtil.ItemCallback<Photo>() {
+        override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+            return oldItem == newItem
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val biding = AdapterItemBinding.inflate(
@@ -27,11 +35,9 @@ class PhotoAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photo = photos[position]
-        holder.viewBiding(photo)
+        val photo = getItem(position)
+        photo?.let { holder.viewBiding(it) }
     }
-
-    override fun getItemCount() = photos.size
 
     inner class ViewHolder(
         private val biding: AdapterItemBinding,
@@ -53,44 +59,9 @@ class PhotoAdapter(
 
                 checkFavorite.setOnClickListener {
                     photo.favorite = checkFavorite.isChecked
-                    modifyItemList(layoutPosition, photo)
                     onClickListener(it, photo, layoutPosition)
                 }
             }
-        }
-    }
-
-    override fun submitList(list: MutableList<Photo>?) {
-        super.submitList(list?.distinct())
-        list?.let {
-            photos.addAll(it)
-            differ.submitList(photos)
-        }
-    }
-
-    fun clearList(){
-        photos.clear()
-    }
-
-    fun getList() = photos
-
-    fun removeItemList(position: Int) {
-        photos.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-    fun modifyItemList(position: Int, photo: Photo) {
-        photos[position] = photo
-        notifyItemChanged(position)
-    }
-
-    private companion object : DiffUtil.ItemCallback<Photo>() {
-        override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
-            return oldItem == newItem
         }
     }
 }

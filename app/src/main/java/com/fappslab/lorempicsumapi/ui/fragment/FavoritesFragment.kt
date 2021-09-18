@@ -15,7 +15,7 @@ import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentFavoritesBinding
-import com.fappslab.lorempicsumapi.ui.adapter.PhotoAdapter
+import com.fappslab.lorempicsumapi.ui.adapter.LocalDataAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.FavoritesViewModel
 import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
@@ -30,8 +30,8 @@ class FavoritesFragment : Fragment() {
     private val args: FavoritesFragmentArgs by navArgs()
     private var pos = -1
 
-    private val photoAdapter by lazy {
-        PhotoAdapter { view, photo, position ->
+    private val adapter by lazy {
+        LocalDataAdapter { view, photo, position ->
             when (view.id) {
                 R.id.card_root -> {
                     val directions =
@@ -74,16 +74,16 @@ class FavoritesFragment : Fragment() {
         viewModel.getFavoritesEvent.observe(viewLifecycleOwner) { dataState ->
             if (dataState is DataState.OnSuccess) {
                 val photos = dataState.data.toMutableList()
-                photoAdapter.clearList()
-                photoAdapter.submitList(photos)
+                adapter.clearList()
+                adapter.submitList(photos)
                 emptyLayout()
             }
         }
 
         viewModel.deleteEvent.observe(viewLifecycleOwner) { dataState ->
             if (dataState is DataState.OnSuccess) {
-                photoAdapter.removeItemList(pos)
-                setResult(photoAdapter.getList())
+                adapter.removeItemList(pos)
+                setResult(adapter.getList())
                 emptyLayout()
             }
         }
@@ -94,13 +94,13 @@ class FavoritesFragment : Fragment() {
             recyclerPhotos.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             recyclerPhotos.setHasFixedSize(true)
-            recyclerPhotos.adapter = photoAdapter
+            recyclerPhotos.adapter = adapter
         }
     }
 
     private fun emptyLayout() {
         binding.include.emptyRoot.isVisible =
-            photoAdapter.itemCount == 0
+            adapter.itemCount == 0
     }
 
     private fun setResult(photos: List<Photo>) {
