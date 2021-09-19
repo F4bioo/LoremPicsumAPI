@@ -31,7 +31,6 @@ constructor(
                 height = obj.height,
                 url = obj.url,
                 downloadUrl = obj.downloadUrl,
-                grayScale = obj.grayScale,
                 favorite = obj.favorite
             )
             photos.add(photo)

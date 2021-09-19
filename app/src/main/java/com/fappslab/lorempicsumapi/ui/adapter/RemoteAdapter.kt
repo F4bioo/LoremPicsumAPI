@@ -3,14 +3,21 @@ package com.fappslab.lorempicsumapi.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.fappslab.lorempicsumapi.data.model.Photo
+import com.fappslab.lorempicsumapi.data.state.DataState
+import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
 import com.fappslab.lorempicsumapi.utils.extensions.set
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RemoteAdapter(
+    private val getFavorite: GetFavorite,
     private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
 ) : PagingDataAdapter<Photo, RemoteAdapter.ViewHolder>(RemoteAdapter) {
 
@@ -34,8 +41,7 @@ class RemoteAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photo = getItem(position)
-        photo?.let { holder.viewBiding(it) }
+        getItem(position)?.let { holder.viewBiding(it) }
     }
 
     inner class ViewHolder(
@@ -48,7 +54,7 @@ class RemoteAdapter(
                 imagePhoto.set(photo.downloadUrl)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
-                checkFavorite.isChecked = photo.favorite
+                checkFavorite.isFavorite(photo.id.toLong())
 
                 itemView.setOnClickListener {
                     it.postDelayed({
@@ -61,6 +67,13 @@ class RemoteAdapter(
                     onClickListener(it, photo, layoutPosition)
                 }
             }
+        }
+    }
+
+    private fun CheckBox.isFavorite(id: Long) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val dataState = getFavorite.invoke(GetFavorite.Params(id))
+            isChecked = dataState is DataState.OnSuccess
         }
     }
 }

@@ -52,7 +52,6 @@ class LocalAdapter(
                 imagePhoto.set(photo.downloadUrl)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
-                checkFavorite.isVisible = true
                 checkFavorite.isChecked = photo.favorite
 
                 itemView.setOnClickListener {

@@ -10,8 +10,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
-import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
-import com.fappslab.lorempicsumapi.data.usecase.GetFavorites
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
 import com.fappslab.lorempicsumapi.data.usecase.SetFavorite
 import com.fappslab.lorempicsumapi.ui.adapter.RemotePagingSource
@@ -26,8 +24,6 @@ class MainViewModel
 @Inject
 constructor(
     private val getPhotos: GetPhotos,
-    private val getFavorite: GetFavorite,
-    private val getFavorites: GetFavorites,
     private val setFavorite: SetFavorite
 ) : ViewModel() {
     private val _getPhotosEvent = MutableLiveData<DataState<List<Photo>>?>()
@@ -51,10 +47,9 @@ constructor(
 
     fun getPhotos() {
         viewModelScope.launch {
-            val remote = RemotePagingSource(getPhotos)
-            Pager(PagingConfig(pageSize = Constants.PAGE_SIZE)) {
-                remote
-            }.flow.cachedIn(viewModelScope).collect {
+            val remote = RemotePagingSource(getPhotos = getPhotos)
+            val config = PagingConfig(pageSize = Constants.PAGE_SIZE)
+            Pager(config = config) { remote }.flow.cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it
             }
         }

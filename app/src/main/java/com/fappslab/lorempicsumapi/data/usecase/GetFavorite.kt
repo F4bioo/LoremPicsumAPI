@@ -33,7 +33,6 @@ constructor(
             height = this.height,
             url = this.url,
             downloadUrl = this.downloadUrl,
-            grayScale = this.grayScale,
             favorite = this.favorite
         )
     }

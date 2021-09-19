@@ -13,6 +13,5 @@ data class Photo(
     val url: String,
     @SerializedName("download_url")
     val downloadUrl: String,
-    var grayScale: Float = 1f,
     var favorite: Boolean = false
 ) : Parcelable

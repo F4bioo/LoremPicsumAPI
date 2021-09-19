@@ -19,10 +19,8 @@ data class PhotoEntity(
     val height: String,
     @ColumnInfo(name = "url")
     val url: String,
-    @ColumnInfo(name = "downloadUrl")
+    @ColumnInfo(name = "download_url")
     val downloadUrl: String,
-    @ColumnInfo(name = "grayScale")
-    var grayScale: Float = 1f,
     @ColumnInfo(name = "favorite")
     var favorite: Boolean = false
 )

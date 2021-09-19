@@ -12,6 +12,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
+import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
@@ -20,6 +21,7 @@ import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -28,11 +30,22 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by viewModels()
 
+    @Inject
+    lateinit var getFavorite: GetFavorite
+
     private val adapter by lazy {
-        RemoteAdapter { _, photo, _ ->
-            val directions =
-                MainFragmentDirections.actionMainFragmentToDetailsFragment(photo)
-            findNavController().navigateWithAnimations(directions)
+        RemoteAdapter(getFavorite) { view, photo, _ ->
+            when (view.id) {
+                R.id.card_root -> {
+                    val directions =
+                        MainFragmentDirections.actionMainFragmentToDetailsFragment(photo)
+                    findNavController().navigateWithAnimations(directions)
+                }
+
+                R.id.check_favorite -> {
+                    viewModel.setFavorite(photo)
+                }
+            }
         }
     }
 
