@@ -2,16 +2,14 @@ package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.Manifest
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.annotation.DrawableRes
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
@@ -20,9 +18,9 @@ import com.fappslab.lorempicsumapi.databinding.FragmentModalBinding
 import com.fappslab.lorempicsumapi.ui.viewmodel.ModalViewModel
 import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.Utils.share
+import com.fappslab.lorempicsumapi.utils.extensions.set
 import com.fappslab.lorempicsumapi.utils.extensions.setNavigationResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButton
 import com.vmadalin.easypermissions.EasyPermissions
 import com.vmadalin.easypermissions.dialogs.SettingsDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,12 +46,16 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
         super.onViewCreated(view, savedInstanceState)
         //(dialog as BottomSheetDialog).behavior.peekHeight = 200
 
-        args.detailsArgs?.let {
-            photo = it
-            viewBinding()
-            initObserver()
-            initListeners()
+        args.detailsArgs?.let { photo = it }
+        if (!this::photo.isInitialized) {
+            findNavController().popBackStack()
+            return
         }
+
+        viewBinding()
+        initObserver()
+        initListeners()
+        iconButtons()
     }
 
     override fun onDestroyView() {
@@ -70,18 +72,6 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
                 setFavoriteIcon(photo.favorite)
             }
         }
-
-        viewModel.saveEvent.observe(viewLifecycleOwner) { dataState ->
-            if (dataState is DataState.OnSuccess) {
-                Toast.makeText(requireContext(), getText(R.string.saved), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    getText(R.string.error_try_again),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
     }
 
     private fun viewBinding() {
@@ -95,15 +85,15 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
 
     private fun initListeners() {
         binding.apply {
-            buttonNormal.setOnClickListener {
+            normal.button.setOnClickListener {
                 setNavigationResult(result = Constants.MODAL_NORMAL)
             }
 
-            buttonGrayscale.setOnClickListener {
+            grayscale.button.setOnClickListener {
                 setNavigationResult(result = Constants.MODAL_GRAYSCALE)
             }
 
-            buttonBlur.setOnClickListener {
+            blur.button.setOnClickListener {
                 setNavigationResult(result = Constants.MODAL_BLUR)
             }
 
@@ -113,17 +103,17 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
                 }
             }
 
-            buttonDownload.setOnClickListener {
+            download.button.setOnClickListener {
                 if (hasPermission()) {
-                    viewModel.savePhoto(requireContext(), photo.bitmap)
+                    setNavigationResult(result = Constants.MODAL_SAVE)
                 } else requestSavePermission()
             }
 
-            buttonShare.setOnClickListener {
+            share.button.setOnClickListener {
                 requireContext().share(photo.url)
             }
 
-            buttonFavorite.setOnClickListener {
+            favorite.button.setOnClickListener {
                 photo.favorite = !photo.favorite
                 setFavoriteIcon(photo.favorite)
                 viewModel.setFavorite(photo)
@@ -131,17 +121,23 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
         }
     }
 
-    private fun setFavoriteIcon(isSelected: Boolean) {
+    private fun iconButtons() {
         binding.apply {
-            if (isSelected) {
-                buttonFavorite.set(R.drawable.ic_favorite_selected, Color.RED)
-            } else buttonFavorite.set(R.drawable.ic_favorite_unselected, Color.WHITE)
+            normal.button.set(R.drawable.ic_default)
+            grayscale.button.set(R.drawable.ic_grayscale)
+            blur.button.set(R.drawable.ic_blur)
+            download.button.set(R.drawable.ic_download)
+            share.button.set(R.drawable.ic_share)
+            favorite.button.set(R.drawable.ic_favorite_unselected)
         }
     }
 
-    private fun MaterialButton.set(@DrawableRes icon: Int, color: Int) {
-        setIconResource(icon)
-        iconTint = ColorStateList.valueOf(color)
+    private fun setFavoriteIcon(isSelected: Boolean) {
+        binding.apply {
+            if (isSelected) {
+                favorite.button.set(R.drawable.ic_favorite_selected, Color.RED)
+            } else favorite.button.set(R.drawable.ic_favorite_unselected, Color.WHITE)
+        }
     }
 
     private fun hasPermission() =
@@ -176,6 +172,6 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        viewModel.savePhoto(requireContext(), photo.bitmap)
+        setNavigationResult(result = Constants.MODAL_SAVE)
     }
 }

@@ -29,6 +29,9 @@
     <string name="share_title">Share photo</string>
     <string name="share_photo">Hi, I hope you like this picture from Unsplash.
         \n\n%s</string>
+    <string name="grayscale">grayscale</string>
+    <string name="blur">blur</string>
+    <string name="reset">reset</string>
 
     <!-- Favorites -->
     <string name="text_empty_list">You have no favorites here</string>

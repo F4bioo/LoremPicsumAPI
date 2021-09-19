@@ -14,16 +14,10 @@ constructor(
 ) : BaseUseCase.Params<DataState<List<Photo>?>?, GetPhotos.Params> {
 
     override suspend fun invoke(params: Params): DataState<List<Photo>>? {
-        return try {
-            when (val response =
-                repository.getPhotos(page = params.page).parseResponse()) {
-
-                is DataState.OnSuccess -> response.data?.let { DataState.OnSuccess(it) }
-                is DataState.OnException -> DataState.OnException(response.e)
-                is DataState.OnError -> DataState.OnError(response.errorBody, response.code)
-            }
-        } catch (e: Exception) {
-            DataState.OnException(e)
+        return when (val response = repository.getPhotos(page = params.page).parseResponse()) {
+            is DataState.OnSuccess -> response.data?.let { DataState.OnSuccess(it) }
+            is DataState.OnException -> DataState.OnException(response.e)
+            is DataState.OnError -> DataState.OnError(response.errorBody, response.code)
         }
     }
 

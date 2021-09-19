@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/button"
+    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+    android:layout_width="@dimen/modal_buttons"
+    android:layout_height="@dimen/modal_buttons"
+    android:insetLeft="0dp"
+    android:insetTop="0dp"
+    android:insetRight="0dp"
+    android:insetBottom="0dp"
+    android:theme="@style/ModalButton"
+    app:iconGravity="textStart"
+    app:iconPadding="0dp"
+    app:shapeAppearance="@style/roundedStyle"
+    app:strokeColor="#676767"
+    app:strokeWidth="1dp" />

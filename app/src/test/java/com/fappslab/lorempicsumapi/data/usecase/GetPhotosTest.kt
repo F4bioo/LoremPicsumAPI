@@ -18,6 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import retrofit2.Response
 
+
 @ExperimentalCoroutinesApi
 class GetPhotosTest {
 
@@ -27,13 +28,12 @@ class GetPhotosTest {
     private val repository: RemoteDataRepository = mock()
     private lateinit var getPhotos: GetPhotos
 
-    private fun errorMock(): Response<List<Photo>?> {
-        val json = readFile("json/error_mock.json")
-        return Response.error<List<Photo>?>(
-            404,
-            json.toResponseBody("application/json".toMediaTypeOrNull())
-        )
-    }
+    private val errorBody = readFile("json/error_body.json")
+    private val errorMock: Response<List<Photo>?>? = Response.error<List<Photo>?>(
+        404, errorBody.toResponseBody("application/json".toMediaTypeOrNull())
+    )
+    private val photo = readFile("json/photo.json")
+    private val successMock: Response<List<Photo>?>? = Response.success(arrayListOf())
 
     @Test
     fun `should fetch result when call API frm repository`(): Unit = runBlocking {
@@ -52,9 +52,17 @@ class GetPhotosTest {
 
     @Test
     fun `should return error when get 404 response`(): Unit = runBlocking {
-        whenever(repository.getPhotos(1)).thenReturn(null)
+        whenever(repository.getPhotos(1)).thenReturn(errorMock)
         getPhotos = GetPhotos(repository)
         val dataState = getPhotos.invoke(GetPhotos.Params(1))
         assertTrue(dataState is DataState.OnError)
+    }
+
+    @Test
+    fun `should return success when get response`(): Unit = runBlocking {
+        whenever(repository.getPhotos(1)).thenReturn(successMock)
+        getPhotos = GetPhotos(repository)
+        val dataState = getPhotos.invoke(GetPhotos.Params(1))
+        assertTrue(dataState is DataState.OnSuccess)
     }
 }

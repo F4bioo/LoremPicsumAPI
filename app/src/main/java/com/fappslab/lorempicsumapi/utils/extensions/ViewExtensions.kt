@@ -1,7 +1,9 @@
 package com.fappslab.lorempicsumapi.utils.extensions
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.button.MaterialButton
 
 
 fun ImageView.set(imageUrl: String) {
@@ -34,6 +37,15 @@ fun FragmentActivity.hideSystemUI(viewGroup: View) {
         controller.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
+}
+
+fun MaterialButton.set(@DrawableRes icon: Int, color: Int) {
+    setIconResource(icon)
+    iconTint = ColorStateList.valueOf(color)
+}
+
+fun MaterialButton.set(@DrawableRes icon: Int) {
+    setIconResource(icon)
 }
 
 fun <T> Fragment.getNavigationResult(key: String = "defKey") =
