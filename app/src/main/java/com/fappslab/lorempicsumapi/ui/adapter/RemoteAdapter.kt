@@ -3,19 +3,18 @@ package com.fappslab.lorempicsumapi.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
 import com.fappslab.lorempicsumapi.utils.extensions.set
 
-
-class LocalDataAdapter(
+class RemoteAdapter(
     private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
-) : ListAdapter<Photo, LocalDataAdapter.ViewHolder>(LocalDataAdapter) {
+) : PagingDataAdapter<Photo, RemoteAdapter.ViewHolder>(RemoteAdapter) {
 
-    private val photos = arrayListOf<Photo>()
+    //private val differ = AsyncListDiffer(this, RemoteAdapter)
 
     private companion object : DiffUtil.ItemCallback<Photo>() {
         override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
@@ -35,11 +34,9 @@ class LocalDataAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photo = photos[position]
-        holder.viewBiding(photo)
+        val photo = getItem(position)
+        photo?.let { holder.viewBiding(it) }
     }
-
-    override fun getItemCount() = photos.size
 
     inner class ViewHolder(
         private val biding: AdapterItemBinding,
@@ -61,33 +58,9 @@ class LocalDataAdapter(
 
                 checkFavorite.setOnClickListener {
                     photo.favorite = checkFavorite.isChecked
-                    modifyItemList(layoutPosition, photo)
                     onClickListener(it, photo, layoutPosition)
                 }
             }
         }
-    }
-
-    override fun submitList(list: MutableList<Photo>?) {
-        super.submitList(list?.distinct())
-        list?.let {
-            photos.addAll(it)
-        }
-    }
-
-    fun clearList(){
-        photos.clear()
-    }
-
-    fun getList() = photos
-
-    fun removeItemList(position: Int) {
-        photos.removeAt(position)
-        notifyItemRemoved(position)
-    }
-
-    fun modifyItemList(position: Int, photo: Photo) {
-        photos[position] = photo
-        notifyItemChanged(position)
     }
 }

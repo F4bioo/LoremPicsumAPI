@@ -3,19 +3,20 @@ package com.fappslab.lorempicsumapi.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
 import com.fappslab.lorempicsumapi.utils.extensions.set
 
-class RemoteDataAdapter(
-    private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
-) : PagingDataAdapter<Photo, RemoteDataAdapter.ViewHolder>(RemoteDataAdapter) {
 
-    private val differ = AsyncListDiffer(this, RemoteDataAdapter)
+class LocalAdapter(
+    private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
+) : ListAdapter<Photo, LocalAdapter.ViewHolder>(LocalAdapter) {
+
+    private val photos = arrayListOf<Photo>()
 
     private companion object : DiffUtil.ItemCallback<Photo>() {
         override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
@@ -35,9 +36,11 @@ class RemoteDataAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photo = getItem(position)
-        photo?.let { holder.viewBiding(it) }
+        val photo = photos[position]
+        holder.viewBiding(photo)
     }
+
+    override fun getItemCount() = photos.size
 
     inner class ViewHolder(
         private val biding: AdapterItemBinding,
@@ -49,6 +52,7 @@ class RemoteDataAdapter(
                 imagePhoto.set(photo.downloadUrl)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
+                checkFavorite.isVisible = true
                 checkFavorite.isChecked = photo.favorite
 
                 itemView.setOnClickListener {
@@ -59,9 +63,33 @@ class RemoteDataAdapter(
 
                 checkFavorite.setOnClickListener {
                     photo.favorite = checkFavorite.isChecked
+                    modifyItemList(layoutPosition, photo)
                     onClickListener(it, photo, layoutPosition)
                 }
             }
         }
+    }
+
+    override fun submitList(list: MutableList<Photo>?) {
+        super.submitList(list?.distinct())
+        list?.let {
+            photos.addAll(it)
+        }
+    }
+
+    fun clearList(){
+        photos.clear()
+    }
+
+    fun getList() = photos
+
+    fun removeItemList(position: Int) {
+        photos.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun modifyItemList(position: Int, photo: Photo) {
+        photos[position] = photo
+        notifyItemChanged(position)
     }
 }

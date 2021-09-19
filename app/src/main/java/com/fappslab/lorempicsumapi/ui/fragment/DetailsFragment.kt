@@ -88,6 +88,10 @@ class DetailsFragment : Fragment() {
             imageMenu.setOnClickListener {
                 openModal()
             }
+
+            imagePhoto.setOnClickListener {
+                openModal()
+            }
         }
     }
 

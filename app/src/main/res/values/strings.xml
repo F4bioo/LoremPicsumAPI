@@ -11,10 +11,13 @@
     <string name="sub_title_splash">The Lorem Ipsum for photos.</string>
     <string name="title_splash">Lorem Picsum</string>
     <string name="text_bottom_splash">challenge</string>
-    <string name="error_splash">Oops! Unable to load data.</string>
 
     <!-- Main -->
     <string name="try_again">Try again</string>
+    <string name="pagination_reached">The list has reached the end.</string>
+    <string name="pagination_loading">Loading.</string>
+    <string name="pagination_not_Loading">Unable to load content.</string>
+    <string name="pagination_error">Oops! Unable to load data.</string>
 
     <!-- Details -->
     <string name="source">Unsplash</string>

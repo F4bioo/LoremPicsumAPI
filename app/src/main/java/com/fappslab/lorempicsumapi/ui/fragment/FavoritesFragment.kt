@@ -15,7 +15,7 @@ import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentFavoritesBinding
-import com.fappslab.lorempicsumapi.ui.adapter.LocalDataAdapter
+import com.fappslab.lorempicsumapi.ui.adapter.LocalAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.FavoritesViewModel
 import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
@@ -31,7 +31,7 @@ class FavoritesFragment : Fragment() {
     private var pos = -1
 
     private val adapter by lazy {
-        LocalDataAdapter { view, photo, position ->
+        LocalAdapter { view, photo, position ->
             when (view.id) {
                 R.id.card_root -> {
                     val directions =

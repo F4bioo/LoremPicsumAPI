@@ -71,6 +71,8 @@
             android:layout_height="wrap_content"
             android:button="@drawable/favorite_selector"
             android:translationX="12dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/image_photo"
             app:layout_constraintEnd_toEndOf="parent"
             tools:checked="true" />

@@ -6,7 +6,7 @@ import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
 
-class PagingAdapter(
+class RemotePagingSource(
     private val getPhotos: GetPhotos
 ) : PagingSource<Int, Photo>() {
 

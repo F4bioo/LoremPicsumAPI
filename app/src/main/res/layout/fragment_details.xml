@@ -25,10 +25,13 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <View

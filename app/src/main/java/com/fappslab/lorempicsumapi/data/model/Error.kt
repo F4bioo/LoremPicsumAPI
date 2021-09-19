@@ -22,10 +22,10 @@ class Error(
         val exceptionError: Error
             get() {
                 val error = Error()
-                error.title = "Error inesperado"
+                error.title = "Unexpected error"
                 error.code = "333"
                 error.httpCode = 500
-                error.text = "Ops! Tivemos um problema.\nQue tal tentar de novo daqui a pouco?"
+                error.text = "Oops! We had a problem.\nHow about trying again in a little while?"
                 return error
             }
 

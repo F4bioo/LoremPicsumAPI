@@ -1,0 +1,8 @@
+{
+  "code": "404",
+  "detail": "Mock detail",
+  "httpCode": 404,
+  "text": "Mock text",
+  "title": "Mock title",
+  "errorBody": "Mock error body"
+}
