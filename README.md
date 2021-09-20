@@ -21,7 +21,7 @@
 
 * [List Adapter](https://developer.android.com/topic/libraries/architecture/paging/v3-overview)
 
-* [Diff Util](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)
+* [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)
 
 * [ViewBinding](https://developer.android.com/topic/libraries/view-binding)
 
