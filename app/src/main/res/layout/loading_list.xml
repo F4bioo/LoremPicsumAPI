@@ -28,11 +28,10 @@
         android:id="@+id/button_try"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
+        android:textColor="#FF9800"
         android:layout_height="wrap_content"
         android:text="@string/try_again"
-        android:visibility="invisible"
         app:cornerRadius="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />

@@ -64,6 +64,7 @@ class MainFragment : Fragment() {
         initObserver()
         initRecyclerView()
         initListeners()
+        initViewBinding()
     }
 
     override fun onDestroyView() {
@@ -103,21 +104,29 @@ class MainFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.fab.setOnClickListener {
-            findNavController()
-                .navigateWithAnimations(R.id.action_mainFragment_to_favoritesFragment)
-        }
+        binding.apply {
+            fab.setOnClickListener {
+                findNavController()
+                    .navigateWithAnimations(R.id.action_mainFragment_to_favoritesFragment)
+            }
 
+            inEmpty.buttonTry.setOnClickListener {
+                viewModel.getPhotos()
+            }
+        }
+    }
+
+    private fun initViewBinding() {
+        binding.apply {
+            inEmpty.buttonTry.transformationMethod = null
+        }
     }
 
     private fun notify(text: String) {
         binding.fab.hide()
-
-        val snackBar = Snackbar.make(binding.mainRoot, text, Snackbar.LENGTH_INDEFINITE)
-        snackBar.setAction(getString(R.string.try_again)) {
-            snackBar.dismiss()
-            viewModel.getPhotos()
-            binding.fab.show()
-        }.show()
+        Snackbar.make(
+            binding.mainRoot,
+            text, Snackbar.LENGTH_INDEFINITE
+        ).show()
     }
 }
