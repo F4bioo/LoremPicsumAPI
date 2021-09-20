@@ -25,8 +25,6 @@
 
 * [ViewBinding](https://developer.android.com/topic/libraries/view-binding)
 
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-
 * [Lifecycle](https://developer.android.com/guide/components/activities/activity-lifecycle)
 
 * [Runtime Permissions](https://developer.android.com/training/permissions/requesting)
