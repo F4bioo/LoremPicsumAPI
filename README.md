@@ -1,3 +1,14 @@
+## This is an example project using
+- Retrofit, Room Database
+- Hilt Dependency Injection
+- MVVM Architecture
+- FileProvider
+- Paging 3
+- ListAdapter 
+- Navigation
+- SafeArgs
+- Api rest
+
 ## Lorem Picsum API
 [Lorem Picsum API](https://picsum.photos/)
 
