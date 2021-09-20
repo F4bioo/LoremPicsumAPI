@@ -47,7 +47,7 @@
 
     <include
         android:id="@+id/in_empty"
-        layout="@layout/empty_list"
-        android:visibility="gone" />
+        layout="@layout/loading_list"
+        android:visibility="invisible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

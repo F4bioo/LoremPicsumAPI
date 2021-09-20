@@ -77,13 +77,12 @@ class MainFragment : Fragment() {
         }
 
         adapter.addLoadStateListener { loadState ->
-            emptyLayout(false)
+            binding.inEmpty.emptyRoot.isVisible =
+                adapter.showPlaceholder()
 
             if (loadState.source.refresh is LoadState.Error) {
                 notify(getString(R.string.pagination_error))
             }
-
-            if (adapter.itemCount == 0) emptyLayout(true)
         }
 
         // On Result Observer
@@ -119,9 +118,5 @@ class MainFragment : Fragment() {
             viewModel.getPhotos()
             binding.fab.show()
         }.show()
-    }
-
-    private fun emptyLayout(isEmpty: Boolean) {
-        binding.inEmpty.emptyRoot.isVisible = isEmpty
     }
 }

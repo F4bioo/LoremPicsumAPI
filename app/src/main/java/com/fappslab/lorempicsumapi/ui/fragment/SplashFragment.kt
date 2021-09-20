@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.databinding.FragmentSplashBinding
@@ -28,7 +29,9 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
+            lifecycleScope.launchWhenResumed {
+                findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
+            }
         }, 500)
     }
 

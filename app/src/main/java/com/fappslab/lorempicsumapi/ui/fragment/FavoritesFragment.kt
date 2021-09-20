@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.model.Photo
@@ -27,7 +26,6 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FavoritesViewModel by viewModels()
-    private val args: FavoritesFragmentArgs by navArgs()
     private var pos = -1
 
     private val adapter by lazy {
@@ -57,6 +55,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getFavorites()
         requireActivity().showSystemUI(view)
         initObserver()
         initRecyclerView()
@@ -69,8 +68,6 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.getFavorites()
-
         viewModel.getFavoritesEvent.observe(viewLifecycleOwner) { dataState ->
             if (dataState is DataState.OnSuccess) {
                 val photos = dataState.data.toMutableList()

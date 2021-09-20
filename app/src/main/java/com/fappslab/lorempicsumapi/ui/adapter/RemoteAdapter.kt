@@ -21,6 +21,7 @@ class RemoteAdapter(
     private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
 ) : PagingDataAdapter<Photo, RemoteAdapter.ViewHolder>(RemoteAdapter) {
 
+    private var showPlaceholder = true
     //private val differ = AsyncListDiffer(this, RemoteAdapter)
 
     private companion object : DiffUtil.ItemCallback<Photo>() {
@@ -42,6 +43,7 @@ class RemoteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { holder.viewBiding(it) }
+        showPlaceholder = itemCount == 0
     }
 
     inner class ViewHolder(
@@ -74,6 +76,11 @@ class RemoteAdapter(
         CoroutineScope(Dispatchers.IO).launch {
             val dataState = getFavorite.invoke(GetFavorite.Params(id))
             isChecked = dataState is DataState.OnSuccess
+                    && dataState.data.favorite == true
         }
+    }
+
+    fun showPlaceholder(): Boolean {
+        return showPlaceholder
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,9 +22,10 @@ import com.fappslab.lorempicsumapi.utils.Utils.share
 import com.fappslab.lorempicsumapi.utils.extensions.set
 import com.fappslab.lorempicsumapi.utils.extensions.setNavigationResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.vmadalin.easypermissions.EasyPermissions
-import com.vmadalin.easypermissions.dialogs.SettingsDialog
 import dagger.hilt.android.AndroidEntryPoint
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
+
 
 @AndroidEntryPoint
 class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCallbacks {
@@ -140,6 +142,7 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
         }
     }
 
+    // ----Storage permission
     private fun hasPermission() =
         EasyPermissions.hasPermissions(
             requireContext(),
@@ -165,13 +168,29 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            if (hasPermission()) {
+                setNavigationResult(result = Constants.MODAL_SAVE)
+            } else Toast.makeText(
+                requireContext(), getString(R.string.message_permission_not_granted),
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            SettingsDialog.Builder(requireActivity()).build().show()
+            AppSettingsDialog.Builder(this)
+                .setTitle(getString(R.string.title_permission_denied))
+                .setRationale(getString(R.string.rationale_permission_denied))
+                .build()
+                .show()
         } else requestSavePermission()
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
         setNavigationResult(result = Constants.MODAL_SAVE)
     }
+    // ----Storage permission
 }
