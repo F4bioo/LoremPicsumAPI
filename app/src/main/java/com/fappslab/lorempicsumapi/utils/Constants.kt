@@ -8,7 +8,6 @@ object Constants {
     const val MODAL_GRAYSCALE = "modalGreyScale"
     const val MODAL_BLUR = "modalBlur"
     const val MODAL_SAVE = "modalSave"
-    const val FAVORITE_RESULT = "favoriteResult"
     const val IMAGE_FILE = "/Lorem-Picsum"
     const val PREFERENCES = "Preferences"
     const val KEY_HAS_MODAL_OPENED = "keyHasModalOpened"
