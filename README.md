@@ -1,5 +1,6 @@
 ## This is an example project using
-- Retrofit, Room Database
+- Retrofit
+- Room Database
 - Hilt Dependency Injection
 - MVVM Architecture
 - FileProvider
