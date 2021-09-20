@@ -10,6 +10,9 @@
 - SafeArgs
 - Api rest
 
+## Figma
+[Screen design](https://www.figma.com/file/WSW9gIGImrVyHbWzcGUwja/Lorem-Picsum-API?node-id=0%3A1)
+
 ## Lorem Picsum API
 [Lorem Picsum API](https://picsum.photos/)
 
@@ -27,9 +30,6 @@ List Images
     }
 ]
 ```
-
-## Figma
-[Screen design](https://www.figma.com/file/WSW9gIGImrVyHbWzcGUwja/Lorem-Picsum-API?node-id=0%3A1)
 
 ## Acknowledgements
 * [Hilt dependency injection](https://developer.android.com/training/dependency-injection/hilt-android)
