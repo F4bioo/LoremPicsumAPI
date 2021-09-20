@@ -19,14 +19,12 @@ import com.fappslab.lorempicsumapi.utils.Constants.MODAL_BLUR
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_GRAYSCALE
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_NORMAL
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_SAVE
-import com.fappslab.lorempicsumapi.utils.Prefs
 import com.fappslab.lorempicsumapi.utils.Utils
 import com.fappslab.lorempicsumapi.utils.extensions.getNavigationResult
 import com.fappslab.lorempicsumapi.utils.extensions.hideSystemUI
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.set
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -36,9 +34,6 @@ class DetailsFragment : Fragment() {
     private val viewModel: DetailsViewModel by viewModels()
     private val args: DetailsFragmentArgs by navArgs()
     private lateinit var photo: Photo
-
-    @Inject
-    lateinit var prefs: Prefs
 
     override fun onCreateView(
         inflater: LayoutInflater,
