@@ -11,12 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
-import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
-import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
 import com.google.android.material.snackbar.Snackbar
@@ -86,12 +84,6 @@ class MainFragment : Fragment() {
                 notify(getString(R.string.pagination_error))
             }
         }
-
-        // On Result Observer
-        findNavController().currentBackStackEntry?.savedStateHandle
-            ?.getLiveData<List<Photo>>(Constants.FAVORITE_RESULT)?.observe(viewLifecycleOwner) {
-
-            }
     }
 
     private fun initRecyclerView() {

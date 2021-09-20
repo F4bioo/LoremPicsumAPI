@@ -11,12 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
-import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentFavoritesBinding
 import com.fappslab.lorempicsumapi.ui.adapter.LocalAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.FavoritesViewModel
-import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,7 +78,6 @@ class FavoritesFragment : Fragment() {
         viewModel.deleteEvent.observe(viewLifecycleOwner) { dataState ->
             if (dataState is DataState.OnSuccess) {
                 adapter.removeItemList(pos)
-                setResult(adapter.getList())
                 emptyLayout()
             }
         }
@@ -98,11 +95,6 @@ class FavoritesFragment : Fragment() {
     private fun emptyLayout() {
         binding.include.emptyRoot.isVisible =
             adapter.itemCount == 0
-    }
-
-    private fun setResult(photos: List<Photo>) {
-        findNavController()
-            .previousBackStackEntry?.savedStateHandle?.set(Constants.FAVORITE_RESULT, photos)
     }
 
     private fun handleOnBackPressed() {
