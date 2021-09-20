@@ -6,7 +6,7 @@
 - FileProvider
 - Paging 3
 - ListAdapter 
-- Navigation
+- Navigation, single Activity architecture
 - SafeArgs
 - Api rest
 
