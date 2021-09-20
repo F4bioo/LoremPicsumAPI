@@ -31,8 +31,8 @@ import pub.devrel.easypermissions.EasyPermissions
 class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCallbacks {
     private var _binding: FragmentModalBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ModalViewModel by viewModels()
-    private val args: ModalFragmentArgs by navArgs()
+    private val viewModel by viewModels<ModalViewModel>()
+    private val args by navArgs<ModalFragmentArgs>()
     private lateinit var photo: Photo
 
     override fun onCreateView(

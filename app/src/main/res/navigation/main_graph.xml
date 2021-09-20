@@ -27,7 +27,7 @@
 
         <argument
             android:name="mainArgs"
-            app:argType="com.fappslab.lorempicsumapi.data.model.Photos"
+            app:argType="com.fappslab.lorempicsumapi.data.model.Photo"
             app:nullable="true" />
 
         <action
@@ -75,7 +75,7 @@
 
         <argument
             android:name="favoritesArgs"
-            app:argType="com.fappslab.lorempicsumapi.data.model.Photos"
+            app:argType="com.fappslab.lorempicsumapi.data.model.Photo"
             app:nullable="true" />
 
         <action

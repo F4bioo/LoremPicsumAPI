@@ -31,8 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DetailsViewModel by viewModels()
-    private val args: DetailsFragmentArgs by navArgs()
+    private val viewModel by viewModels<DetailsViewModel>()
+    private val args by navArgs<DetailsFragmentArgs>()
     private lateinit var photo: Photo
 
     override fun onCreateView(

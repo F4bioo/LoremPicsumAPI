@@ -28,13 +28,13 @@ import javax.inject.Inject
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel by viewModels<MainViewModel>()
 
     @Inject
     lateinit var getFavorite: GetFavorite
 
     private val adapter by lazy {
-        RemoteAdapter(getFavorite) { view, photo, _ ->
+        RemoteAdapter(lifecycle, getFavorite) { view, photo, _ ->
             when (view.id) {
                 R.id.card_root -> {
                     val directions =
@@ -69,6 +69,7 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        adapter.jobCancel()
     }
 
     private fun initObserver() {

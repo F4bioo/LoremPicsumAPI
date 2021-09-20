@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.coroutineScope
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,15 +14,16 @@ import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
 import com.fappslab.lorempicsumapi.utils.extensions.set
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class RemoteAdapter(
+    private val lifecycle: Lifecycle,
     private val getFavorite: GetFavorite,
     private val onClickListener: (view: View, photo: Photo, position: Int) -> Unit
 ) : PagingDataAdapter<Photo, RemoteAdapter.ViewHolder>(RemoteAdapter) {
 
+    private var job: Job? = null
     private var showPlaceholder = true
     //private val differ = AsyncListDiffer(this, RemoteAdapter)
 
@@ -73,7 +76,7 @@ class RemoteAdapter(
     }
 
     private fun CheckBox.isFavorite(id: Long) {
-        CoroutineScope(Dispatchers.IO).launch {
+        job = lifecycle.coroutineScope.launch {
             val dataState = getFavorite.invoke(GetFavorite.Params(id))
             isChecked = dataState is DataState.OnSuccess
                     && dataState.data.favorite == true
@@ -82,5 +85,9 @@ class RemoteAdapter(
 
     fun showPlaceholder(): Boolean {
         return showPlaceholder
+    }
+
+    fun jobCancel() {
+        job?.cancel()
     }
 }

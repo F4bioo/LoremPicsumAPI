@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: FavoritesViewModel by viewModels()
+    private val viewModel by viewModels<FavoritesViewModel>()
     private var pos = -1
 
     private val adapter by lazy {
