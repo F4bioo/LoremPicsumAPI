@@ -1,6 +1,21 @@
 ## Lorem Picsum API
 [Lorem Picsum API](https://picsum.photos/)
 
+List Images
+
+```sh
+[
+    {
+        "id": "0",
+        "author": "Alejandro Escamilla",
+        "width": 5616,
+        "height": 3744,
+        "url": "https://unsplash.com/...",
+        "download_url": "https://picsum.photos/..."
+    }
+]
+```
+
 ## Figma
 [Screen design](https://www.figma.com/file/WSW9gIGImrVyHbWzcGUwja/Lorem-Picsum-API?node-id=0%3A1)
 
