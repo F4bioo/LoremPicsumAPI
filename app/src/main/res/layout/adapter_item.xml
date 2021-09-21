@@ -20,8 +20,8 @@
         <ProgressBar
             android:id="@+id/progress_photos"
             style="?attr/indeterminateProgressStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             app:layout_constraintBottom_toBottomOf="@+id/image_photo"
             app:layout_constraintEnd_toEndOf="@+id/image_photo"
             app:layout_constraintStart_toStartOf="@+id/image_photo"
@@ -35,8 +35,8 @@
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView

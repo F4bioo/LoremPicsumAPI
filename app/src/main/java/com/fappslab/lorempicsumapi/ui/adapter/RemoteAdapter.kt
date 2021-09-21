@@ -13,6 +13,7 @@ import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
+import com.fappslab.lorempicsumapi.utils.extensions.bg
 import com.fappslab.lorempicsumapi.utils.extensions.set
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -55,6 +56,7 @@ class RemoteAdapter(
         fun viewBiding(photo: Photo) {
             biding.apply {
                 imagePhoto.set(photo.downloadUrl)
+                imagePhoto.bg(progressPhotos)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
                 checkFavorite.isFavorite(photo.id.toLong())

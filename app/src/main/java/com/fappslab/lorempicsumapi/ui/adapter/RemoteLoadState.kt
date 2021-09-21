@@ -40,7 +40,7 @@ class RemoteLoadState(
                 itemView.layoutParams.let { it as StaggeredGridLayoutManager.LayoutParams }
                     .apply { isFullSpan = true }
 
-                progress.isVisible = loadState is LoadState.Loading
+                progressLoad.isVisible = loadState is LoadState.Loading
                 buttonRetry.isVisible = loadState is LoadState.Error
                 textError.isVisible = loadState is LoadState.Error
                 textError.setText(R.string.pagination_error)

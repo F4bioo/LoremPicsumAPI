@@ -20,9 +20,9 @@ import com.fappslab.lorempicsumapi.utils.Constants.MODAL_GRAYSCALE
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_NORMAL
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_SAVE
 import com.fappslab.lorempicsumapi.utils.Utils
+import com.fappslab.lorempicsumapi.utils.extensions.bg
 import com.fappslab.lorempicsumapi.utils.extensions.getNavigationResult
 import com.fappslab.lorempicsumapi.utils.extensions.hideSystemUI
-import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.set
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,7 +100,10 @@ class DetailsFragment : Fragment() {
     }
 
     private fun viewBinding() {
-        binding.imagePhoto.set(photo.downloadUrl)
+        binding.apply {
+            imagePhoto.bg(progressPhotos)
+            imagePhoto.set(photo.downloadUrl)
+        }
     }
 
     private fun initListeners() {
@@ -122,6 +125,6 @@ class DetailsFragment : Fragment() {
     private fun openModal() {
         val directions =
             DetailsFragmentDirections.actionDetailsFragmentToModalFragment(photo)
-        findNavController().navigateWithAnimations(directions)
+        findNavController().navigate(directions)
     }
 }
