@@ -17,7 +17,6 @@ import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -76,12 +75,9 @@ class MainFragment : Fragment() {
             adapter.submitData(lifecycle, pagingData)
         }
 
-        adapter.addLoadStateListener { loadState ->
-            binding.inEmpty.emptyRoot.isVisible =
-                adapter.showPlaceholder()
-
-            if (loadState.source.refresh is LoadState.Error) {
-                notify(getString(R.string.pagination_error))
+        adapter.addLoadStateListener {
+            if (it.refresh is LoadState.NotLoading || it.refresh is LoadState.Error) {
+                binding.inEmpty.emptyRoot.isVisible = adapter.itemCount == 0
             }
         }
     }
@@ -90,7 +86,6 @@ class MainFragment : Fragment() {
         binding.apply {
             recyclerPhotos.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            recyclerPhotos.setHasFixedSize(true)
             recyclerPhotos.adapter = adapter
         }
     }
@@ -103,7 +98,7 @@ class MainFragment : Fragment() {
             }
 
             inEmpty.buttonTry.setOnClickListener {
-                viewModel.getPhotos()
+                adapter.retry()
             }
         }
     }
@@ -112,13 +107,5 @@ class MainFragment : Fragment() {
         binding.apply {
             inEmpty.buttonTry.transformationMethod = null
         }
-    }
-
-    private fun notify(text: String) {
-        binding.fab.hide()
-        Snackbar.make(
-            binding.mainRoot,
-            text, Snackbar.LENGTH_INDEFINITE
-        ).show()
     }
 }

@@ -24,7 +24,6 @@ class RemoteAdapter(
 ) : PagingDataAdapter<Photo, RemoteAdapter.ViewHolder>(RemoteAdapter) {
 
     private var job: Job? = null
-    private var showPlaceholder = true
     //private val differ = AsyncListDiffer(this, RemoteAdapter)
 
     private companion object : DiffUtil.ItemCallback<Photo>() {
@@ -46,7 +45,6 @@ class RemoteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { holder.viewBiding(it) }
-        showPlaceholder = itemCount == 0
     }
 
     inner class ViewHolder(
@@ -81,10 +79,6 @@ class RemoteAdapter(
             isChecked = dataState is DataState.OnSuccess
                     && dataState.data.favorite == true
         }
-    }
-
-    fun showPlaceholder(): Boolean {
-        return showPlaceholder
     }
 
     fun jobCancel() {
