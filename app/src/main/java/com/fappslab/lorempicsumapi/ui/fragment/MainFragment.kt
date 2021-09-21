@@ -14,6 +14,7 @@ import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
+import com.fappslab.lorempicsumapi.ui.adapter.RemoteLoadState
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
@@ -86,7 +87,11 @@ class MainFragment : Fragment() {
         binding.apply {
             recyclerPhotos.layoutManager =
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            recyclerPhotos.adapter = adapter
+
+            recyclerPhotos.adapter = adapter.withLoadStateHeaderAndFooter(
+                header = RemoteLoadState { },
+                footer = RemoteLoadState { adapter.retry() }
+            )
         }
     }
 

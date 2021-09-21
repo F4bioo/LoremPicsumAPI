@@ -45,13 +45,14 @@ constructor(
         }
     }
 
-    fun getPhotos() {
+    private fun getPhotos() {
         viewModelScope.launch {
-            val remote = RemotePagingSource(getPhotos = getPhotos)
-            val config = PagingConfig(pageSize = Constants.PAGE_SIZE)
-            Pager(config = config) { remote }.flow.cachedIn(viewModelScope).collect {
+            Pager(config = PagingConfig(pageSize = Constants.PAGE_SIZE)) {
+                RemotePagingSource(getPhotos = getPhotos)
+            }.flow.cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it
             }
+
         }
     }
 }

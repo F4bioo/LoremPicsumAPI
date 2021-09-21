@@ -71,3 +71,4 @@ List Images
 <img src="images/screen_capture4.png" width="30%"></img>
 <img src="images/screen_capture5.png" width="30%"></img>
 <img src="images/screen_capture6.png" width="30%"></img>
+<img src="images/screen_capture7.png" width="30%"></img>
