@@ -65,6 +65,7 @@ List Images
 * [FileProvider](https://developer.android.com/reference/androidx/core/content/FileProvider)
 
 ## Screens
+<kbd>
 <img src="images/screen_capture1.png" width="30%"></img>
 <img src="images/screen_capture2.png" width="30%"></img>
 <img src="images/screen_capture3.png" width="30%"></img>
@@ -72,3 +73,4 @@ List Images
 <img src="images/screen_capture5.png" width="30%"></img>
 <img src="images/screen_capture6.png" width="30%"></img>
 <img src="images/screen_capture7.png" width="30%"></img>
+</kbd>
