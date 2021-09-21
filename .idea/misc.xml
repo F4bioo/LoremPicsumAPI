@@ -18,7 +18,7 @@
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/adapter_item.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/adapter_item_list.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/adapter_item_view.xml" value="0.4" />
-        <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/adapter_load.xml" value="0.48961937716262977" />
+        <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/adapter_load.xml" value="0.4337121212121212" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/app_splash.xml" value="0.30052083333333335" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/empty_list.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/fragment_details.xml" value="0.2733812949640288" />
@@ -28,7 +28,8 @@
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/fragment_splash.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/item_network_state.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/layout_loading_state.xml" value="0.2" />
-        <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/loading_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/loading_list.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/main_load.xml" value="0.29259259259259257" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/layout/rounded_button.xml" value="0.36102564102564105" />
         <entry key="..\:/AndroidStudioProjects/LoremPicsumAPI/app/src/main/res/xml/file_provider_path.xml" value="0.25416666666666665" />
       </map>

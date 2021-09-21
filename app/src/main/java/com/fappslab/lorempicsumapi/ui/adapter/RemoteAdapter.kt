@@ -61,13 +61,13 @@ class RemoteAdapter(
 
                 itemView.setOnClickListener {
                     it.postDelayed({
-                        onClickListener(it, photo, layoutPosition)
+                        onClickListener.invoke(it, photo, layoutPosition)
                     }, 300)
                 }
 
                 checkFavorite.setOnClickListener {
                     photo.favorite = checkFavorite.isChecked
-                    onClickListener(it, photo, layoutPosition)
+                    onClickListener.invoke(it, photo, layoutPosition)
                 }
             }
         }

@@ -47,12 +47,11 @@ constructor(
 
     private fun getPhotos() {
         viewModelScope.launch {
-            Pager(config = PagingConfig(pageSize = Constants.PAGE_SIZE)) {
-                RemotePagingSource(getPhotos = getPhotos)
+            Pager(PagingConfig(pageSize = Constants.PAGE_SIZE, enablePlaceholders = false)) {
+                RemotePagingSource(getPhotos)
             }.flow.cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it
             }
-
         }
     }
 }

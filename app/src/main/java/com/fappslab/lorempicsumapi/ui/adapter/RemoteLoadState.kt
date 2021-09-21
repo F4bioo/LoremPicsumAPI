@@ -7,6 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.databinding.AdapterLoadBinding
 
 class RemoteLoadState(
@@ -29,6 +30,10 @@ class RemoteLoadState(
         private val onClickListener: () -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.buttonRetry.setOnClickListener { onClickListener.invoke() }
+        }
+
         fun viewBiding(loadState: LoadState) {
             binding.apply {
 
@@ -36,16 +41,9 @@ class RemoteLoadState(
                     .apply { isFullSpan = true }
 
                 progress.isVisible = loadState is LoadState.Loading
-                buttonTryAgain.isVisible = loadState is LoadState.Error
-
-                textError.isVisible =
-                    !(loadState as? LoadState.Error)?.error?.message.isNullOrBlank()
-
-                textError.text = (loadState as? LoadState.Error)?.error?.message
-
-                buttonTryAgain.setOnClickListener {
-                    onClickListener()
-                }
+                buttonRetry.isVisible = loadState is LoadState.Error
+                textError.isVisible = loadState is LoadState.Error
+                textError.setText(R.string.pagination_error)
             }
         }
     }

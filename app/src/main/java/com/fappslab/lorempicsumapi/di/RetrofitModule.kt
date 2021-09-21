@@ -41,8 +41,8 @@ object RetrofitModule {
         logging: HttpLoggingInterceptor
     ): OkHttpClient {
         val client = OkHttpClient.Builder()
-            .readTimeout(10, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(5, TimeUnit.SECONDS)
 
         if (BuildConfig.DEBUG) {
             client.addInterceptor(logging)
