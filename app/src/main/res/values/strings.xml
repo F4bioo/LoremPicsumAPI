@@ -13,12 +13,13 @@
     <string name="text_bottom_splash">challenge</string>
 
     <!-- Main -->
-    <string name="try_again">Try again</string>
+    <string name="retry">Retry</string>
     <string name="pagination_reached">The list has reached the end.</string>
     <string name="pagination_loading">Loading.</string>
     <string name="pagination_not_Loading">Unable to load content.</string>
     <string name="pagination_error">Oops! Unable to load data.</string>
     <string name="empty_list">Empty list</string>
+    <string name="loading_list">Loading list</string>
 
     <!-- Details -->
     <string name="source">Unsplash</string>
@@ -40,6 +41,6 @@
 
     <!-- Favorites -->
     <string name="text_empty_list">You have no favorites here</string>
-    <string name="sub_text_empty_list">Tap on ♥ button to add a new favorite.</string>
+    <string name="sub_text_empty_list">Go back to main screen and tap on ♥ button to add a new favorite.</string>
 
 </resources>

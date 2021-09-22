@@ -1,8 +1,10 @@
 package com.fappslab.lorempicsumapi.utils.extensions
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.annotation.DrawableRes
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,14 +15,29 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
+import java.util.*
 
 
 fun ImageView.set(imageUrl: String) {
     Glide.with(this)
         .load(imageUrl)
         .centerCrop()
-        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .diskCacheStrategy(DiskCacheStrategy.NONE)
         .into(this)
+}
+
+fun ImageView.bg(progress: ProgressBar?) {
+    Random().apply {
+        val color = Color.argb(
+            125,
+            nextInt(256),
+            nextInt(256),
+            nextInt(256)
+        )
+        setBackgroundColor(color)
+        progress?.indeterminateTintList =
+            ColorStateList.valueOf(color)
+    }
 }
 
 fun FragmentActivity.showSystemUI(viewGroup: View) {

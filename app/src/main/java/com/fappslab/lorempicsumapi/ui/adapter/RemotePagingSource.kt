@@ -26,7 +26,8 @@ class RemotePagingSource(
                     prevKey = if (page == 1) null else page - 1,
                     nextKey = if (response.data.isEmpty()) null else page + 1
                 )
-                else -> LoadResult.Error(Exception("Error loading data!"))
+                is DataState.OnException -> LoadResult.Error(response.e)
+                else -> throw NullPointerException("Error fetching data!")
             }
         } catch (e: Exception) {
             LoadResult.Error(e)

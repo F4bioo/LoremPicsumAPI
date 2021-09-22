@@ -29,14 +29,14 @@ class FavoritesFragment : Fragment() {
     private val adapter by lazy {
         LocalAdapter { view, photo, position ->
             when (view.id) {
-                R.id.card_root -> {
-                    val directions =
-                        FavoritesFragmentDirections.actionFavoritesFragmentToDetailsFragment(photo)
-                    findNavController().navigateWithAnimations(directions)
-                }
                 R.id.check_favorite -> {
                     pos = position
                     viewModel.deleteFavorite(photo.id.toLong())
+                }
+                else -> {
+                    val directions =
+                        FavoritesFragmentDirections.actionFavoritesFragmentToDetailsFragment(photo)
+                    findNavController().navigateWithAnimations(directions)
                 }
             }
         }
@@ -53,11 +53,24 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getFavorites()
         requireActivity().showSystemUI(view)
+        getFavorites()
         initObserver()
         initRecyclerView()
+        initListeners()
         handleOnBackPressed()
+    }
+
+    private fun initListeners() {
+        binding.apply {
+            swipeRefresh.setOnRefreshListener {
+                getFavorites()
+            }
+        }
+    }
+
+    private fun getFavorites() {
+        viewModel.getFavorites()
     }
 
     override fun onDestroyView() {
@@ -67,6 +80,8 @@ class FavoritesFragment : Fragment() {
 
     private fun initObserver() {
         viewModel.getFavoritesEvent.observe(viewLifecycleOwner) { dataState ->
+            binding.swipeRefresh.isRefreshing = false
+
             if (dataState is DataState.OnSuccess) {
                 val photos = dataState.data.toMutableList()
                 adapter.clearList()
@@ -93,7 +108,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun emptyLayout() {
-        binding.include.emptyRoot.isVisible =
+        binding.include.root.isVisible =
             adapter.itemCount == 0
     }
 

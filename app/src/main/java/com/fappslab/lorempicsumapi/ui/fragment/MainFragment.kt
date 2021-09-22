@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
@@ -18,6 +19,7 @@ import com.fappslab.lorempicsumapi.ui.adapter.RemoteLoadState
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,14 +36,13 @@ class MainFragment : Fragment() {
     private val adapter by lazy {
         RemoteAdapter(lifecycle, getFavorite) { view, photo, _ ->
             when (view.id) {
-                R.id.card_root -> {
+                R.id.check_favorite -> {
+                    viewModel.setFavorite(photo)
+                }
+                else -> {
                     val directions =
                         MainFragmentDirections.actionMainFragmentToDetailsFragment(photo)
                     findNavController().navigateWithAnimations(directions)
-                }
-
-                R.id.check_favorite -> {
-                    viewModel.setFavorite(photo)
                 }
             }
         }
@@ -62,7 +63,6 @@ class MainFragment : Fragment() {
         initObserver()
         initRecyclerView()
         initListeners()
-        initViewBinding()
     }
 
     override fun onDestroyView() {
@@ -74,12 +74,7 @@ class MainFragment : Fragment() {
     private fun initObserver() {
         viewModel.pagingEvent.observe(viewLifecycleOwner) { pagingData ->
             adapter.submitData(lifecycle, pagingData)
-        }
-
-        adapter.addLoadStateListener {
-            if (it.refresh is LoadState.NotLoading || it.refresh is LoadState.Error) {
-                binding.inEmpty.emptyRoot.isVisible = adapter.itemCount == 0
-            }
+            binding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -89,7 +84,7 @@ class MainFragment : Fragment() {
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
             recyclerPhotos.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = RemoteLoadState { },
+                header = RemoteLoadState { adapter.retry() },
                 footer = RemoteLoadState { adapter.retry() }
             )
         }
@@ -97,20 +92,50 @@ class MainFragment : Fragment() {
 
     private fun initListeners() {
         binding.apply {
+            swipeRefresh.setOnRefreshListener {
+                adapter.refresh()
+            }
+
             fab.setOnClickListener {
                 findNavController()
                     .navigateWithAnimations(R.id.action_mainFragment_to_favoritesFragment)
             }
 
-            inEmpty.buttonTry.setOnClickListener {
+            include.buttonRetry.setOnClickListener {
                 adapter.retry()
             }
         }
+
+        adapter.addLoadStateListener { loadStates ->
+            loadStates.showEmptyList()
+        }
     }
 
-    private fun initViewBinding() {
-        binding.apply {
-            inEmpty.buttonTry.transformationMethod = null
+    private fun CombinedLoadStates.showEmptyList() {
+        binding.include.apply {
+            val isLoading = refresh is LoadState.Loading
+            val isError = refresh is LoadState.Error
+
+            val isListEmpty = (isLoading || isError) && adapter.itemCount == 0
+            root.isVisible = isListEmpty
+
+            buttonRetry.isVisible = isLoading.apply { progress.isVisible = !this }
+            buttonRetry.isVisible = isError.apply { progress.isVisible = !this }
+
+            textEmpty.text = when {
+                isLoading -> getString(R.string.loading_list)
+                else -> getString(R.string.empty_list)
+            }
+
+            if (append.endOfPaginationReached) {
+                Snackbar.make(
+                    root,
+                    getString(R.string.pagination_reached),
+                    Snackbar.LENGTH_INDEFINITE
+                ).apply {
+                    setAction(getString(R.string.retry)) { dismiss() }
+                }.show()
+            }
         }
     }
 }
