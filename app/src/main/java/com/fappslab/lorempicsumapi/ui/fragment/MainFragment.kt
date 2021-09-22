@@ -13,6 +13,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
+import com.fappslab.lorempicsumapi.databinding.FragmentDetailsBinding
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteLoadState
@@ -25,7 +26,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<MainViewModel>()
@@ -48,17 +49,9 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentMainBinding.bind(view)
         requireActivity().showSystemUI(view)
         initObserver()
         initRecyclerView()

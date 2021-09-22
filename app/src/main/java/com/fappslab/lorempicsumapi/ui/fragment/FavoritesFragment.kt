@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.state.DataState
+import com.fappslab.lorempicsumapi.databinding.FragmentDetailsBinding
 import com.fappslab.lorempicsumapi.databinding.FragmentFavoritesBinding
 import com.fappslab.lorempicsumapi.ui.adapter.LocalAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.FavoritesViewModel
@@ -20,7 +21,7 @@ import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<FavoritesViewModel>()
@@ -42,17 +43,9 @@ class FavoritesFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentFavoritesBinding.bind(view)
         requireActivity().showSystemUI(view)
         getFavorites()
         initObserver()
