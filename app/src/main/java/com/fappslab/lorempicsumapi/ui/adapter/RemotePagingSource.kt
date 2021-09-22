@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
+import com.fappslab.lorempicsumapi.utils.Constants
 
 class RemotePagingSource(
     private val getPhotos: GetPhotos

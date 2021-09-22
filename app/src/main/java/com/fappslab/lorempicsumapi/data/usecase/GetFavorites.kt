@@ -25,6 +25,7 @@ constructor(
         val photos = arrayListOf<Photo>()
         for (obj in this) {
             val photo = Photo(
+                _id = obj._id,
                 id = obj.id,
                 author = obj.author,
                 width = obj.width,

@@ -27,6 +27,7 @@ constructor(
 
     private fun PhotoEntity.toPhoto(): Photo {
         return Photo(
+            _id = this._id,
             id = this.id,
             author = this.author,
             width = this.width,
