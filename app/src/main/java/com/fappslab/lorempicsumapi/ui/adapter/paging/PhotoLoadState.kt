@@ -1,4 +1,4 @@
-package com.fappslab.lorempicsumapi.ui.adapter
+package com.fappslab.lorempicsumapi.ui.adapter.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.databinding.AdapterLoadBinding
 
-class RemoteLoadState(
+class PhotoLoadState(
     private val onClickListener: () -> Unit
-) : LoadStateAdapter<RemoteLoadState.ViewHolder>() {
+) : LoadStateAdapter<PhotoLoadState.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ViewHolder {
         val biding = AdapterLoadBinding.inflate(
@@ -21,7 +21,7 @@ class RemoteLoadState(
         return ViewHolder(biding, onClickListener)
     }
 
-    override fun onBindViewHolder(holder: RemoteLoadState.ViewHolder, loadState: LoadState) {
+    override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
         holder.viewBiding(loadState)
     }
 

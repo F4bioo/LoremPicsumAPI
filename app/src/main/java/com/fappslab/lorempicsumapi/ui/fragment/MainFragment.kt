@@ -1,22 +1,20 @@
 package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
-import com.fappslab.lorempicsumapi.databinding.FragmentDetailsBinding
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
-import com.fappslab.lorempicsumapi.ui.adapter.RemoteLoadState
+import com.fappslab.lorempicsumapi.ui.adapter.paging.PhotoLoadState
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
@@ -24,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
@@ -77,8 +75,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
             recyclerPhotos.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = RemoteLoadState { adapter.retry() },
-                footer = RemoteLoadState { adapter.retry() }
+                header = PhotoLoadState { adapter.retry() },
+                footer = PhotoLoadState { adapter.retry() }
             )
         }
     }

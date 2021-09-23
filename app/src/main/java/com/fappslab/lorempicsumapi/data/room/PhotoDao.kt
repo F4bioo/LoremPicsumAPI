@@ -1,5 +1,6 @@
 package com.fappslab.lorempicsumapi.data.room
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -19,4 +20,13 @@ interface PhotoDao {
 
     @Query("SELECT * FROM photo WHERE favorite = 1")
     suspend fun getFavorites(): List<PhotoEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(photos: List<PhotoEntity>)
+
+    @Query("SELECT * FROM photo ORDER BY id ASC")
+    fun getAll(): PagingSource<Int, PhotoEntity>
+
+    @Query("DELETE FROM photo")
+    suspend fun deleteAll()
 }
