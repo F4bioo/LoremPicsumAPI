@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5cd7882e862a8eff1045224efd9c17f1",
+    "identityHash": "6bbf9c9cc217d7b07b4be4a01b518598",
     "entities": [
       {
         "tableName": "photo",
@@ -59,12 +59,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "remote_keys",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`photoId` TEXT NOT NULL, `prevKey` INTEGER, `nextKey` INTEGER, PRIMARY KEY(`photoId`))",
+        "fields": [
+          {
+            "fieldPath": "photoId",
+            "columnName": "photoId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "prevKey",
+            "columnName": "prevKey",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nextKey",
+            "columnName": "nextKey",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "photoId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5cd7882e862a8eff1045224efd9c17f1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6bbf9c9cc217d7b07b4be4a01b518598')"
     ]
   }
 }

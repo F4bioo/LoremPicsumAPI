@@ -40,18 +40,14 @@ fun Photo.fromPhotoToEntity(): PhotoEntity {
     )
 }
 
-fun List<PhotoDomain>.fromDomainToPhotos(): List<Photo> {
-    val photos = arrayListOf<Photo>()
-    for (photo in this) {
-        photos.add(photo.fromDomainToPhoto())
-    }
-    return photos
+fun List<PhotoDomain>.fromDomainsToPhotos(): List<Photo> {
+    return this.map { it.fromDomainToPhoto() }
 }
 
-fun List<PhotoEntity>.fromEntityToPhotos(): List<Photo> {
-    val photos = arrayListOf<Photo>()
-    for (photo in this) {
-        photos.add(photo.fromEntityToPhoto())
-    }
-    return photos
+fun List<PhotoEntity>.fromEntitiesToPhotos(): List<Photo> {
+    return this.map { it.fromEntityToPhoto() }
+}
+
+fun List<Photo>.fromDomainsToEntities(): List<PhotoEntity> {
+    return this.map { it.fromPhotoToEntity() }
 }
