@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.data.usecase.SetFavorite
 import dagger.hilt.android.lifecycle.HiltViewModel

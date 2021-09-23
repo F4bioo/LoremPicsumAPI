@@ -8,8 +8,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
 import com.fappslab.lorempicsumapi.data.usecase.SetFavorite
 import com.fappslab.lorempicsumapi.ui.adapter.RemotePagingSource

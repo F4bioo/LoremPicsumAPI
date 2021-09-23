@@ -1,9 +1,7 @@
 package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -11,8 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fappslab.lorempicsumapi.R
-import com.fappslab.lorempicsumapi.data.state.DataState
-import com.fappslab.lorempicsumapi.databinding.FragmentDetailsBinding
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentFavoritesBinding
 import com.fappslab.lorempicsumapi.ui.adapter.LocalAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.FavoritesViewModel

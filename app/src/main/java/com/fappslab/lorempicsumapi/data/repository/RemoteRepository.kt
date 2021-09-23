@@ -1,16 +1,16 @@
 package com.fappslab.lorempicsumapi.data.repository
 
 import com.fappslab.lorempicsumapi.data.api.ApiService
-import com.fappslab.lorempicsumapi.data.model.Photo
+import com.fappslab.lorempicsumapi.data.model.PhotoDomain
 import retrofit2.Response
 import javax.inject.Inject
 
-class RemoteDataRepository
+class RemoteRepository
 @Inject
 constructor(
     private val api: ApiService
 ) : Repository.RemoteData {
-    override suspend fun getPhotos(page: Int): Response<List<Photo>?>? {
+    override suspend fun getPhotos(page: Int): Response<List<PhotoDomain>?>? {
         return api.getPhotos(page = page)
     }
 }

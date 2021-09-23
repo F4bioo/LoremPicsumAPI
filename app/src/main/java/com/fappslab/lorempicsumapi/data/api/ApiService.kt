@@ -1,6 +1,6 @@
 package com.fappslab.lorempicsumapi.data.api
 
-import com.fappslab.lorempicsumapi.data.model.Photo
+import com.fappslab.lorempicsumapi.data.model.PhotoDomain
 import com.fappslab.lorempicsumapi.utils.Constants
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,5 +11,5 @@ interface ApiService {
     suspend fun getPhotos(
         @Query("page") page: Int,
         @Query("limit") limit: Int = Constants.PAGE_SIZE
-    ): Response<List<Photo>?>?
+    ): Response<List<PhotoDomain>?>?
 }

@@ -13,8 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fappslab.lorempicsumapi.R
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.databinding.FragmentModalBinding
 import com.fappslab.lorempicsumapi.ui.viewmodel.ModalViewModel
 import com.fappslab.lorempicsumapi.utils.Constants

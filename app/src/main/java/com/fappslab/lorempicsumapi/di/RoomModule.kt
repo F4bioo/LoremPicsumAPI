@@ -2,8 +2,9 @@ package com.fappslab.lorempicsumapi.di
 
 import android.content.Context
 import androidx.room.Room
-import com.fappslab.lorempicsumapi.data.room.AppDatabase
 import com.fappslab.lorempicsumapi.data.room.PhotoDao
+import com.fappslab.lorempicsumapi.data.room.PhotosDatabase
+import com.fappslab.lorempicsumapi.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,18 +20,18 @@ object RoomModule {
     @Provides
     fun provideAppDatabase(
         @ApplicationContext context: Context
-    ): AppDatabase {
+    ): PhotosDatabase {
         return Room.databaseBuilder(
-            context, AppDatabase::class.java,
-            AppDatabase.DATABASE_NAME
+            context, PhotosDatabase::class.java,
+            Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
     }
 
     @Singleton
     @Provides
     fun providePhotoDao(
-        appDatabase: AppDatabase
+        db: PhotosDatabase
     ): PhotoDao {
-        return appDatabase.photoDao()
+        return db.photoDao()
     }
 }

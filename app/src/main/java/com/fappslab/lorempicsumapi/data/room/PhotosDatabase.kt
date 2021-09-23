@@ -5,11 +5,6 @@ import androidx.room.RoomDatabase
 import com.fappslab.lorempicsumapi.data.model.PhotoEntity
 
 @Database(entities = [PhotoEntity::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
-
+abstract class PhotosDatabase : RoomDatabase() {
     abstract fun photoDao(): PhotoDao
-
-    companion object {
-        var DATABASE_NAME: String = "photo.db"
-    }
 }

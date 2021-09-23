@@ -9,8 +9,8 @@ import androidx.lifecycle.coroutineScope
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.state.DataState
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
 import com.fappslab.lorempicsumapi.utils.extensions.bg

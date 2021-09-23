@@ -1,7 +1,7 @@
 package com.fappslab.lorempicsumapi.data.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.fappslab.lorempicsumapi.data.repository.LocalDataRepository
+import com.fappslab.lorempicsumapi.data.repository.LocalRepository
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,7 +16,7 @@ class DeleteFavoriteTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private val repository: LocalDataRepository = mock()
+    private val repository: LocalRepository = mock()
     private lateinit var deleteFavorite: DeleteFavorite
 
     @Test

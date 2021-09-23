@@ -7,8 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "photo")
 data class PhotoEntity(
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "_id")
-    val _id: Long,
     @ColumnInfo(name = "id")
     val id: String,
     @ColumnInfo(name = "author")

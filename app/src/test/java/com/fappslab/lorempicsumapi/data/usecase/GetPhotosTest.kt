@@ -2,7 +2,7 @@ package com.fappslab.lorempicsumapi.data.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.repository.RemoteDataRepository
+import com.fappslab.lorempicsumapi.data.repository.RemoteRepository
 import com.fappslab.lorempicsumapi.data.state.DataState
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
@@ -25,7 +25,7 @@ class GetPhotosTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private val repository: RemoteDataRepository = mock()
+    private val repository: RemoteRepository = mock()
     private lateinit var getPhotos: GetPhotos
 
     private val errorBody = readFile("json/error_body.json")

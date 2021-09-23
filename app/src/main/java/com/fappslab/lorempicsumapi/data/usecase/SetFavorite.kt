@@ -1,15 +1,14 @@
 package com.fappslab.lorempicsumapi.data.usecase
 
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.repository.LocalDataRepository
-import com.fappslab.lorempicsumapi.data.state.DataState
-import com.fappslab.lorempicsumapi.utils.BaseUseCase
+import com.fappslab.lorempicsumapi.data.repository.LocalRepository
 import javax.inject.Inject
 
 class SetFavorite
 @Inject
 constructor(
-    private val repository: LocalDataRepository
+    private val repository: LocalRepository
 ) : BaseUseCase.Params<DataState<Boolean>, SetFavorite.Params> {
 
     override suspend fun invoke(params: Params): DataState<Boolean> {

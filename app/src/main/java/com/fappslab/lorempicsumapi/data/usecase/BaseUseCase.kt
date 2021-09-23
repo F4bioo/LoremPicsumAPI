@@ -1,4 +1,4 @@
-package com.fappslab.lorempicsumapi.utils
+package com.fappslab.lorempicsumapi.data.usecase
 
 interface BaseUseCase {
     interface Params<T, Params> {

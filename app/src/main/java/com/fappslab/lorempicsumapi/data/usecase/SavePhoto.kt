@@ -6,8 +6,7 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import com.fappslab.lorempicsumapi.data.state.DataState
-import com.fappslab.lorempicsumapi.utils.BaseUseCase
+import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.utils.Constants
 import java.io.File
 import java.io.FileOutputStream
