@@ -3,6 +3,7 @@ package com.fappslab.lorempicsumapi.data.usecase
 import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.data.repository.LocalRepository
+import com.fappslab.lorempicsumapi.utils.extensions.fromPhotoToEntity
 import javax.inject.Inject
 
 class SetFavorite
@@ -13,7 +14,7 @@ constructor(
 
     override suspend fun invoke(params: Params): DataState<Boolean> {
         return try {
-            DataState.OnSuccess(repository.setFavorite(params.photo) != -1L)
+            DataState.OnSuccess(repository.setFavorite(params.photo.fromPhotoToEntity()) != -1L)
         } catch (e: Exception) {
             DataState.OnException(e)
         }

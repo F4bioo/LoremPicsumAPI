@@ -12,7 +12,7 @@ interface Repository {
     }
 
     interface LocalData {
-        suspend fun setFavorite(photo: Photo): Long
+        suspend fun setFavorite(photo: PhotoEntity): Long
 
         suspend fun deleteFavorite(id: Long): Int
 

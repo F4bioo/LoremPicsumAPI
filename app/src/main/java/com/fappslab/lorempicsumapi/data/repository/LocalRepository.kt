@@ -11,8 +11,8 @@ class LocalRepository
 constructor(
     private val dao: PhotoDao
 ) : Repository.LocalData {
-    override suspend fun setFavorite(photo: Photo): Long {
-        return dao.setFavorite(photo = photo.fromPhotoToEntity())
+    override suspend fun setFavorite(photo: PhotoEntity): Long {
+        return dao.setFavorite(photo = photo)
     }
 
     override suspend fun deleteFavorite(id: Long): Int {

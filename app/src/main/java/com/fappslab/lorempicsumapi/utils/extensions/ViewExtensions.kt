@@ -22,7 +22,7 @@ fun ImageView.set(imageUrl: String) {
     Glide.with(this)
         .load(imageUrl)
         .centerCrop()
-        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        .diskCacheStrategy(DiskCacheStrategy.DATA)
         .into(this)
 }
 
