@@ -20,8 +20,8 @@ import com.fappslab.lorempicsumapi.ui.adapter.paging.PhotoLoadState
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.CheckNetwork
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
+import com.fappslab.lorempicsumapi.utils.extensions.networkToast
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
-import com.fappslab.lorempicsumapi.utils.extensions.slideUp
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -33,12 +33,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<MainViewModel>()
+    private var auxCnnLost = true
 
     @Inject
     lateinit var getFavorite: GetFavorite
-
-    @Inject
-    lateinit var checkNetwork: CheckNetwork
 
     private val adapter by lazy {
         RemoteAdapter(lifecycle, getFavorite) { view, photo, _ ->
@@ -76,19 +74,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             binding.swipeRefresh.isRefreshing = false
         }
 
-        checkNetwork.observe(viewLifecycleOwner) { hasConnection ->
+        CheckNetwork(requireContext()).observe(viewLifecycleOwner) { hasConnection ->
             binding.apply {
-                textConnection.text = when {
-                    hasConnection -> {
-                        textConnection.slideUp()
-                        textConnection.setBackgroundColor(getColor(R.color.green))
-                        getString(R.string.connected)
-                    }
-                    else -> {
-                        textConnection.slideUp()
-                        textConnection.setBackgroundColor(getColor(R.color.red))
-                        getString(R.string.connection_lost)
-                    }
+                if (!hasConnection) {
+                    networkToastConfig(R.color.red, getString(R.string.connection_lost))
+                    auxCnnLost = false
+                } else if (hasConnection && !auxCnnLost) {
+                    networkToastConfig(R.color.green, getString(R.string.connected))
+                    auxCnnLost = true
                 }
             }
         }
@@ -155,7 +148,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getColor(@ColorRes color: Int): Int {
-        return ContextCompat.getColor(requireContext(), color)
+    private fun networkToastConfig(@ColorRes color: Int, text: String) {
+        val getColor = ContextCompat.getColor(requireContext(), color)
+        binding.apply {
+            textConnection.setBackgroundColor(getColor)
+            textConnection.text = text
+            textConnection.networkToast()
+        }
     }
 }

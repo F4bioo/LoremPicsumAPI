@@ -18,7 +18,6 @@ constructor(
         return when (val response =
             repository.getPhotos(page = params.page, limit = params.limit).parseResponse()) {
             is DataState.OnSuccess -> response.data?.let {
-                println("<> Repository")
                 DataState.OnSuccess(it.fromDomainsToPhotos())
             }
             is DataState.OnException -> DataState.OnException(response.e)

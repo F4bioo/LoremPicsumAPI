@@ -56,8 +56,8 @@
         android:padding="2dp"
         android:textColor="#fff"
         android:visibility="gone"
-        tools:background="#4CAF50"
         tools:text="Connected again."
+        tools:background="#4CAF50"
         tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
