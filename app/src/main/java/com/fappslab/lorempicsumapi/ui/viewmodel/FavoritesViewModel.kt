@@ -26,20 +26,23 @@ constructor(
     val getFavoritesEvent: LiveData<DataState<List<Photo>>>
         get() = _getFavoritesEvent
 
+    private val _setFavoritesEvent = MutableLiveData<DataState<Boolean>>()
+    val setFavoritesEvent: LiveData<DataState<Boolean>>
+        get() = _setFavoritesEvent
+
     private val _deleteEvent = MutableLiveData<DataState<Boolean>>()
     val deleteEvent: LiveData<DataState<Boolean>>
         get() = _deleteEvent
 
     fun getFavorites() {
         viewModelScope.launch {
-            delay(500)
             _getFavoritesEvent.value = getFavorites.invoke()
         }
     }
 
     fun setFavorite(photo: Photo) {
         viewModelScope.launch {
-            setFavorite.invoke(SetFavorite.Params(photo))
+            _setFavoritesEvent.value =  setFavorite.invoke(SetFavorite.Params(photo))
         }
     }
 
