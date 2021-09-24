@@ -22,6 +22,8 @@ class CheckNetwork(
         object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
+                postValue(true)
+
                 // Network is available, but now check if has Internet connection
                 // This may take a few seconds
                 CoroutineScope(Dispatchers.IO).launch {
