@@ -1,9 +1,7 @@
 package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -32,7 +30,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 R.id.check_favorite -> {
                     pos = position
                     viewModel.setFavorite(photo)
-                    getFavorites()
                 }
                 else -> {
                     val directions =
@@ -80,6 +77,14 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 adapter.clearList()
                 adapter.submitList(photos)
                 emptyLayout()
+            }
+        }
+
+        viewModel.setFavoritesEvent.observe(viewLifecycleOwner) { dataState ->
+            if (dataState is DataState.OnSuccess) {
+                view?.postDelayed({
+                    getFavorites()
+                }, 500)
             }
         }
 
