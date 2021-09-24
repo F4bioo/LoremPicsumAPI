@@ -22,6 +22,7 @@
     <string name="loading_list">Loading list</string>
     <string name="connected">Connected again.</string>
     <string name="connection_lost">Connection lost.</string>
+    <string name="ok">OK</string>
 
     <!-- Details -->
     <string name="source">Unsplash</string>

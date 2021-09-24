@@ -142,7 +142,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     getString(R.string.pagination_reached),
                     Snackbar.LENGTH_INDEFINITE
                 ).apply {
-                    setAction(getString(R.string.retry)) { dismiss() }
+                    setAction(getString(R.string.ok)) { dismiss() }
                 }.show()
             }
         }
