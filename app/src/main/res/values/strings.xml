@@ -20,6 +20,8 @@
     <string name="pagination_error">Oops! Unable to load data.</string>
     <string name="empty_list">Empty list</string>
     <string name="loading_list">Loading list</string>
+    <string name="connected">Connected again.</string>
+    <string name="connection_lost">Connection lost.</string>
 
     <!-- Details -->
     <string name="source">Unsplash</string>

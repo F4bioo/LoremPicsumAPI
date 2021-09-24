@@ -18,7 +18,7 @@ import java.io.IOException
 @ExperimentalPagingApi
 class PhotoRemoteMediator(
     private val getPhotos: GetPhotos,
-    private val database: PhotosDatabase
+    private val db: PhotosDatabase
 ) : RemoteMediator<Int, PhotoEntity>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -39,11 +39,11 @@ class PhotoRemoteMediator(
             val photos = if (response is DataState.OnSuccess) response.data else arrayListOf()
             val isEndOfList = photos.isEmpty()
 
-            database.withTransaction {
+            db.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    database.photoDao().deleteAll()
-                    database.getKeysDao().deleteAll()
+                    db.getKeysDao().deleteAll()
+                    db.photoDao().deleteAll()
                 }
 
                 val prevKey = if (page == Constants.PAGE_INDEX) null else page - 1
@@ -52,8 +52,8 @@ class PhotoRemoteMediator(
                     RemoteKeys(it.id, prevKey = prevKey, nextKey = nextKey)
                 }
 
-                database.getKeysDao().insertAll(keys)
-                database.photoDao().insertAll(photos.fromDomainsToEntities())
+                db.getKeysDao().insertAll(keys)
+                db.photoDao().insertAll(photos.fromDomainsToEntities())
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
 
@@ -70,17 +70,20 @@ class PhotoRemoteMediator(
     ): Any {
         return when (loadType) {
             LoadType.REFRESH -> {
+                println("<> REFRESH")
                 val remoteKeys = getClosestRemoteKey(state)
                 remoteKeys?.nextKey?.minus(1) ?: Constants.PAGE_INDEX
             }
 
             LoadType.APPEND -> {
+                println("<> APPEND")
                 val remoteKeys = getLastRemoteKey(state)
                 val nextKey = remoteKeys?.nextKey
                 return nextKey ?: MediatorResult.Success(endOfPaginationReached = false)
             }
 
             LoadType.PREPEND -> {
+                println("<> PREPEND")
                 val remoteKeys = getFirstRemoteKey(state)
                 return remoteKeys?.prevKey ?: return MediatorResult.Success(
                     endOfPaginationReached = false
@@ -93,7 +96,7 @@ class PhotoRemoteMediator(
     private suspend fun getClosestRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
-                database.getKeysDao().remoteKeysPhotoId(repoId)
+                db.getKeysDao().remoteKeysPhotoId(repoId)
             }
         }
     }
@@ -103,7 +106,7 @@ class PhotoRemoteMediator(
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
-            ?.let { photo -> database.getKeysDao().remoteKeysPhotoId(photo.id) }
+            ?.let { photo -> db.getKeysDao().remoteKeysPhotoId(photo.id) }
     }
 
     // get the first remote key inserted which had the data
@@ -111,6 +114,6 @@ class PhotoRemoteMediator(
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
-            ?.let { photo -> database.getKeysDao().remoteKeysPhotoId(photo.id) }
+            ?.let { photo -> db.getKeysDao().remoteKeysPhotoId(photo.id) }
     }
 }

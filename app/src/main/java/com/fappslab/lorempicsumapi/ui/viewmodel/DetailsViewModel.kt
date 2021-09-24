@@ -23,7 +23,8 @@ constructor(
 ) : ViewModel() {
 
     private val _saveEvent = MutableLiveData<DataState<Void?>>()
-    val saveEvent: LiveData<DataState<Void?>> get() = _saveEvent
+    val saveEvent: LiveData<DataState<Void?>>
+        get() = _saveEvent
 
     fun savePhoto(context: Context, bitmap: Bitmap?) {
         viewModelScope.launch {

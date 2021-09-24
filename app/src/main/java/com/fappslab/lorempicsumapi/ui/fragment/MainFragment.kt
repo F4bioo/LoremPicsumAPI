@@ -2,6 +2,8 @@ package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,11 +18,14 @@ import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
 import com.fappslab.lorempicsumapi.ui.adapter.RemoteAdapter
 import com.fappslab.lorempicsumapi.ui.adapter.paging.PhotoLoadState
 import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
+import com.fappslab.lorempicsumapi.utils.CheckNetwork
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
+import com.fappslab.lorempicsumapi.utils.extensions.slideUp
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @ExperimentalPagingApi
 @AndroidEntryPoint
@@ -31,6 +36,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     @Inject
     lateinit var getFavorite: GetFavorite
+
+    @Inject
+    lateinit var checkNetwork: CheckNetwork
 
     private val adapter by lazy {
         RemoteAdapter(lifecycle, getFavorite) { view, photo, _ ->
@@ -66,6 +74,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         viewModel.pagingEvent.observe(viewLifecycleOwner) { pagingData ->
             adapter.submitData(lifecycle, pagingData)
             binding.swipeRefresh.isRefreshing = false
+        }
+
+        checkNetwork.observe(viewLifecycleOwner) { hasConnection ->
+            binding.apply {
+                textConnection.text = when {
+                    hasConnection -> {
+                        textConnection.slideUp()
+                        textConnection.setBackgroundColor(getColor(R.color.green))
+                        getString(R.string.connected)
+                    }
+                    else -> {
+                        textConnection.slideUp()
+                        textConnection.setBackgroundColor(getColor(R.color.red))
+                        getString(R.string.connection_lost)
+                    }
+                }
+            }
         }
     }
 
@@ -128,5 +153,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 }.show()
             }
         }
+    }
+
+    private fun getColor(@ColorRes color: Int): Int {
+        return ContextCompat.getColor(requireContext(), color)
     }
 }

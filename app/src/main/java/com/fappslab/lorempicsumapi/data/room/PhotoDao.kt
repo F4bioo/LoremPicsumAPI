@@ -18,15 +18,18 @@ interface PhotoDao {
     @Query("SELECT * FROM photo WHERE id = :id")
     suspend fun getFavorite(id: Long): PhotoEntity
 
-    @Query("SELECT * FROM photo WHERE favorite = 1")
+    @Query("SELECT * FROM photo WHERE favorite = 1 ORDER BY id ASC")
     suspend fun getFavorites(): List<PhotoEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(photos: List<PhotoEntity>)
 
     @Query("SELECT * FROM photo ORDER BY id ASC")
     fun getAll(): PagingSource<Int, PhotoEntity>
 
-    @Query("DELETE FROM photo")
+    @Query("SELECT * FROM photo ORDER BY id ASC")
+    suspend fun getAllPhotos(): List<PhotoEntity>
+
+    @Query("DELETE FROM photo WHERE favorite = 0")
     suspend fun deleteAll()
 }

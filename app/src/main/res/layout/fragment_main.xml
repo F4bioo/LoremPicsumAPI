@@ -47,4 +47,17 @@
         layout="@layout/main_load"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/text_connection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_horizontal"
+        android:padding="2dp"
+        android:textColor="#fff"
+        android:visibility="gone"
+        tools:background="#4CAF50"
+        tools:text="Connected again."
+        tools:visibility="visible" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

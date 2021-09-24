@@ -15,6 +15,7 @@ import javax.inject.Inject
 class SavePhoto
 @Inject
 constructor() : BaseUseCase.Params<DataState<Void?>, SavePhoto.Params> {
+
     override suspend fun invoke(params: Params): DataState<Void?> {
         return try {
             saveImage(params.context, params.bitmap)

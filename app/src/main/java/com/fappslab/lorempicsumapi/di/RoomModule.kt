@@ -26,12 +26,4 @@ object RoomModule {
             Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
     }
-
-    @Singleton
-    @Provides
-    fun providePhotoDao(
-        db: PhotosDatabase
-    ): PhotoDao {
-        return db.photoDao()
-    }
 }

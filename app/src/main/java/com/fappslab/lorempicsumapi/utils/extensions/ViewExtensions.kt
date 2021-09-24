@@ -3,12 +3,14 @@ package com.fappslab.lorempicsumapi.utils.extensions
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
+import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.annotation.DrawableRes
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
@@ -54,6 +56,23 @@ fun FragmentActivity.hideSystemUI(viewGroup: View) {
         controller.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
+}
+
+fun View.slideUp(duration: Int = 500) {
+    isVisible = true
+    val animate = TranslateAnimation(0f, 0f, height.toFloat(), 0f)
+    animate.duration = duration.toLong()
+    animate.fillAfter = true
+    startAnimation(animate)
+    postDelayed({ slideDown() }, 3000)
+}
+
+fun View.slideDown(duration: Int = 500) {
+    isVisible = true
+    val animate = TranslateAnimation(0f, 0f, 0f, height.toFloat())
+    animate.duration = duration.toLong()
+    animate.fillAfter = true
+    startAnimation(animate)
 }
 
 fun MaterialButton.set(@DrawableRes icon: Int, color: Int) {

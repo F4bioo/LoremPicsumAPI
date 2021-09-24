@@ -10,4 +10,9 @@
 
     <color name="translucent">#28000000</color>
     <color name="modal_background">#65000000</color>
+
+    <!-- Internet connection -->
+    <color name="green">#62B331</color>
+    <color name="red">#BD1E1E</color>
+
 </resources>
