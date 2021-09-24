@@ -70,20 +70,17 @@ class PhotoRemoteMediator(
     ): Any {
         return when (loadType) {
             LoadType.REFRESH -> {
-                println("<> REFRESH")
                 val remoteKeys = getClosestRemoteKey(state)
                 remoteKeys?.nextKey?.minus(1) ?: Constants.PAGE_INDEX
             }
 
             LoadType.APPEND -> {
-                println("<> APPEND")
                 val remoteKeys = getLastRemoteKey(state)
                 val nextKey = remoteKeys?.nextKey
                 return nextKey ?: MediatorResult.Success(endOfPaginationReached = false)
             }
 
             LoadType.PREPEND -> {
-                println("<> PREPEND")
                 val remoteKeys = getFirstRemoteKey(state)
                 return remoteKeys?.prevKey ?: return MediatorResult.Success(
                     endOfPaginationReached = false

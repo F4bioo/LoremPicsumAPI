@@ -58,21 +58,20 @@ fun FragmentActivity.hideSystemUI(viewGroup: View) {
     }
 }
 
-fun View.slideUp(duration: Int = 500) {
-    isVisible = true
-    val animate = TranslateAnimation(0f, 0f, height.toFloat(), 0f)
-    animate.duration = duration.toLong()
-    animate.fillAfter = true
-    startAnimation(animate)
-    postDelayed({ slideDown() }, 3000)
-}
-
-fun View.slideDown(duration: Int = 500) {
-    isVisible = true
-    val animate = TranslateAnimation(0f, 0f, 0f, height.toFloat())
-    animate.duration = duration.toLong()
-    animate.fillAfter = true
-    startAnimation(animate)
+fun View.networkToast(duration: Int = 500) {
+    TranslateAnimation(0f, 0f, height.toFloat(), 0f).let { animUp ->
+        animUp.duration = duration.toLong()
+        animUp.fillAfter = true
+        isVisible = true
+        startAnimation(animUp)
+    }
+    postDelayed({
+        TranslateAnimation(0f, 0f, 0f, height.toFloat()).let { animDown ->
+            animDown.duration = duration.toLong()
+            animDown.fillAfter = true
+            startAnimation(animDown)
+        }
+    }, 3000)
 }
 
 fun MaterialButton.set(@DrawableRes icon: Int, color: Int) {
