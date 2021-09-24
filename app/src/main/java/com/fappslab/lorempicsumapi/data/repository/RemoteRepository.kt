@@ -10,6 +10,7 @@ class RemoteRepository
 constructor(
     private val api: ApiService
 ) : Repository.RemoteData {
+
     override suspend fun getPhotos(page: Int, limit: Int): Response<List<PhotoDomain>?>? {
         return api.getPhotos(page = page, limit = limit)
     }

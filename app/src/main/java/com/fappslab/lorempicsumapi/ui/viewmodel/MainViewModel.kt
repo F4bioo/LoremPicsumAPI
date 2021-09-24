@@ -4,15 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.Photo
-import com.fappslab.lorempicsumapi.data.room.PhotosDatabase
+import com.fappslab.lorempicsumapi.data.usecase.GetMediatorData
+import com.fappslab.lorempicsumapi.data.usecase.GetPagingData
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
 import com.fappslab.lorempicsumapi.data.usecase.SetFavorite
-import com.fappslab.lorempicsumapi.ui.adapter.paging.PhotoPagingSource
-import com.fappslab.lorempicsumapi.ui.adapter.paging.PhotoRemoteMediator
-import com.fappslab.lorempicsumapi.utils.Constants
 import com.fappslab.lorempicsumapi.utils.extensions.fromEntityToPhoto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -26,16 +27,20 @@ class MainViewModel
 constructor(
     private val getPhotos: GetPhotos,
     private val setFavorite: SetFavorite,
-    private val database: PhotosDatabase,
+    private val getPagingData: GetPagingData,
+    private val getMediatorData: GetMediatorData
 ) : ViewModel() {
     private val _getPhotosEvent = MutableLiveData<DataState<List<Photo>>?>()
-    val getPhotosEvent: LiveData<DataState<List<Photo>>?> get() = _getPhotosEvent
+    val getPhotosEvent: LiveData<DataState<List<Photo>>?>
+        get() = _getPhotosEvent
 
     private val _pagingEvent = MutableLiveData<PagingData<Photo>>()
-    val pagingEvent: LiveData<PagingData<Photo>> get() = _pagingEvent
+    val pagingEvent: LiveData<PagingData<Photo>>
+        get() = _pagingEvent
 
     private val _insertEvent = MutableLiveData<DataState<Boolean>>()
-    val insertEvent: LiveData<DataState<Boolean>> get() = _insertEvent
+    val insertEvent: LiveData<DataState<Boolean>>
+        get() = _insertEvent
 
     init {
         getPhotosFromMediator()
@@ -43,19 +48,13 @@ constructor(
 
     fun setFavorite(photo: Photo) {
         viewModelScope.launch {
-            _insertEvent.value = setFavorite.invoke(SetFavorite.Params(photo = photo))
+            setFavorite.invoke(SetFavorite.Params(photo = photo))
         }
     }
 
     fun getPhotosFromPagingSource() {
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(
-                    pageSize = Constants.PAGE_SIZE,
-                    enablePlaceholders = false
-                ),
-                pagingSourceFactory = { PhotoPagingSource(getPhotos) }
-            ).flow.cachedIn(viewModelScope).collect {
+            getPagingData.invoke().cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it
             }
         }
@@ -63,17 +62,7 @@ constructor(
 
     private fun getPhotosFromMediator() {
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(
-                    pageSize = Constants.PAGE_SIZE,
-                    enablePlaceholders = false,
-                ),
-                remoteMediator = PhotoRemoteMediator(
-                    getPhotos = getPhotos,
-                    database = database
-                ),
-                pagingSourceFactory = { database.photoDao().getAll() }
-            ).flow.cachedIn(viewModelScope).collect {
+            getMediatorData.invoke().cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it.map { entity ->
                     entity.fromEntityToPhoto()
                 }

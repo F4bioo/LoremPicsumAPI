@@ -21,10 +21,12 @@ constructor(
     private val setFavorite: SetFavorite
 ) : ViewModel() {
     private val _insertEvent = MutableLiveData<DataState<Boolean>>()
-    val insertEvent: LiveData<DataState<Boolean>> get() = _insertEvent
+    val insertEvent: LiveData<DataState<Boolean>>
+        get() = _insertEvent
 
     private val _selectEvent = MutableLiveData<DataState<Photo>>()
-    val selectEvent: LiveData<DataState<Photo>> get() = _selectEvent
+    val selectEvent: LiveData<DataState<Photo>>
+        get() = _selectEvent
 
     fun getFavorite(id: Long) {
         viewModelScope.launch {

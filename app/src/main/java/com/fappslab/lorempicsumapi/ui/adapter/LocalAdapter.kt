@@ -3,7 +3,6 @@ package com.fappslab.lorempicsumapi.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -79,8 +78,6 @@ class LocalAdapter(
     fun clearList(){
         photos.clear()
     }
-
-    fun getList() = photos
 
     fun removeItemList(position: Int) {
         photos.removeAt(position)

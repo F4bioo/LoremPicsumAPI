@@ -18,5 +18,7 @@ interface Repository {
         suspend fun getFavorite(id: Long): PhotoEntity
 
         suspend fun getFavorites(): List<PhotoEntity>
+
+        suspend fun getAllPhotos(): List<PhotoEntity>
     }
 }
