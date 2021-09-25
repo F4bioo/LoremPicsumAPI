@@ -2,6 +2,7 @@ package com.fappslab.lorempicsumapi.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -11,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fappslab.lorempicsumapi.R
 import com.fappslab.lorempicsumapi.data.usecase.GetFavorite
 import com.fappslab.lorempicsumapi.databinding.FragmentMainBinding
@@ -33,13 +36,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<MainViewModel>()
+    private var auxHasReachedTop = false
     private var auxCnnLost = true
 
     @Inject
     lateinit var getFavorite: GetFavorite
 
+    @Inject
+    lateinit var checkNetwork: CheckNetwork
+
     private val adapter by lazy {
-        RemoteAdapter(lifecycle, getFavorite) { view, photo, _ ->
+        RemoteAdapter(lifecycle, getFavorite) { view, photo, position ->
             when (view.id) {
                 R.id.check_favorite -> {
                     viewModel.setFavorite(photo)
@@ -60,6 +67,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         initObserver()
         initRecyclerView()
         initListeners()
+        handleOnBackPressed()
     }
 
     override fun onDestroyView() {
@@ -74,13 +82,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             binding.swipeRefresh.isRefreshing = false
         }
 
-        CheckNetwork(requireContext()).observe(viewLifecycleOwner) { hasConnection ->
+        checkNetwork.observe(viewLifecycleOwner) { hasConnection ->
             binding.apply {
                 if (!hasConnection) {
                     networkToastConfig(R.color.red, getString(R.string.connection_lost))
                     auxCnnLost = false
                 } else if (hasConnection && !auxCnnLost) {
                     networkToastConfig(R.color.green, getString(R.string.connected))
+                    swipeRefresh.swipe()
                     auxCnnLost = true
                 }
             }
@@ -118,6 +127,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         adapter.addLoadStateListener { loadStates ->
             loadStates.showEmptyList()
         }
+
+        binding.recyclerPhotos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                auxHasReachedTop = !recyclerView.canScrollVertically(-1)
+                        && newState == RecyclerView.SCROLL_STATE_IDLE
+            }
+        })
     }
 
     private fun CombinedLoadStates.showEmptyList() {
@@ -155,5 +172,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             textConnection.text = text
             textConnection.networkToast()
         }
+    }
+
+    private fun SwipeRefreshLayout.swipe() {
+        isRefreshing = true
+        adapter.retry()
+
+        postDelayed({
+            isRefreshing = false
+        }, 1000)
+    }
+
+    private fun handleOnBackPressed() {
+        val fa = requireActivity()
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (auxHasReachedTop) {
+                    fa.finish()
+                } else binding.recyclerPhotos.smoothScrollToPosition(0)
+            }
+        }
+        fa.onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, callback)
     }
 }
