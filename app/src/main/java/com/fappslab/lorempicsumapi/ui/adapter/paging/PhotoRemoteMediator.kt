@@ -42,8 +42,8 @@ class PhotoRemoteMediator(
             db.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    db.photoDao().deleteAll()
-                    db.getKeysDao().deleteAll()
+                    db.photoDao().delAllPhotos()
+                    db.keyDao().delAllRemoteKeys()
                 }
 
                 val prevKey = if (page == Constants.PAGE_INDEX) null else page - 1
@@ -52,8 +52,8 @@ class PhotoRemoteMediator(
                     RemoteKeyEntity(it.id, prevKey = prevKey, nextKey = nextKey)
                 }
 
-                db.photoDao().insertAll(photos.fromDomainsToEntities())
-                db.getKeysDao().insertAll(keys)
+                db.photoDao().setAllPhotos(photos.fromDomainsToEntities())
+                db.keyDao().setAllRemoteKeys(keys)
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
 
@@ -93,7 +93,7 @@ class PhotoRemoteMediator(
     private suspend fun getClosestRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeyEntity? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
-                db.getKeysDao().remoteKeysPhotoId(repoId)
+                db.keyDao().getRemoteKey(repoId)
             }
         }
     }
@@ -103,7 +103,7 @@ class PhotoRemoteMediator(
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
-            ?.let { photo -> db.getKeysDao().remoteKeysPhotoId(photo.id) }
+            ?.let { photo -> db.keyDao().getRemoteKey(photo.id) }
     }
 
     // get the first remote key inserted which had the data
@@ -111,6 +111,6 @@ class PhotoRemoteMediator(
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
-            ?.let { photo -> db.getKeysDao().remoteKeysPhotoId(photo.id) }
+            ?.let { photo -> db.keyDao().getRemoteKey(photo.id) }
     }
 }

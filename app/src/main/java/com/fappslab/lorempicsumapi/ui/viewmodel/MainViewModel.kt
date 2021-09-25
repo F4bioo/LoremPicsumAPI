@@ -14,7 +14,7 @@ import com.fappslab.lorempicsumapi.data.usecase.GetMediatorData
 import com.fappslab.lorempicsumapi.data.usecase.GetPagingData
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
 import com.fappslab.lorempicsumapi.data.usecase.SetFavorite
-import com.fappslab.lorempicsumapi.utils.extensions.fromEntityToPhoto
+import com.fappslab.lorempicsumapi.utils.extensions.fromPhotoEntityToPhoto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -52,7 +52,7 @@ constructor(
         }
     }
 
-    fun getPhotosFromPagingSource() {
+    private fun getPhotosFromPagingSource() {
         viewModelScope.launch {
             getPagingData.invoke().cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it
@@ -64,7 +64,7 @@ constructor(
         viewModelScope.launch {
             getMediatorData.invoke().cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it.map { entity ->
-                    entity.fromEntityToPhoto()
+                    entity.fromPhotoEntityToPhoto()
                 }
             }
         }

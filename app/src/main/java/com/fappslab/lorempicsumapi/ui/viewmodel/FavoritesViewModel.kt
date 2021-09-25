@@ -19,8 +19,8 @@ constructor(
     private val getFavorites: GetFavorites,
     private val setFavorite: SetFavorite
 ) : ViewModel() {
-    private val _getFavoritesEvent = MutableLiveData<DataState<List<Photo>>>()
-    val getFavoritesEvent: LiveData<DataState<List<Photo>>>
+    private val _getFavoritesEvent = MutableLiveData<DataState<List<Photo>?>>()
+    val getFavoritesEvent: LiveData<DataState<List<Photo>?>>
         get() = _getFavoritesEvent
 
     private val _setFavoritesEvent = MutableLiveData<DataState<Boolean>>()

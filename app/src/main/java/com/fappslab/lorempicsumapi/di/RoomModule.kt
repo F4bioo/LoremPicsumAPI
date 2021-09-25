@@ -2,8 +2,10 @@ package com.fappslab.lorempicsumapi.di
 
 import android.content.Context
 import androidx.room.Room
+import com.fappslab.lorempicsumapi.data.room.FavoriteDao
 import com.fappslab.lorempicsumapi.data.room.PhotoDao
 import com.fappslab.lorempicsumapi.data.room.PhotosDatabase
+import com.fappslab.lorempicsumapi.data.room.RemoteKeyDao
 import com.fappslab.lorempicsumapi.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -25,5 +27,29 @@ object RoomModule {
             context, PhotosDatabase::class.java,
             Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
+    }
+
+    @Singleton
+    @Provides
+    fun providePhotoDao(
+        db: PhotosDatabase
+    ): PhotoDao {
+        return db.photoDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemoteKeyDao(
+        db: PhotosDatabase
+    ): RemoteKeyDao {
+        return db.keyDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoriteDao(
+        db: PhotosDatabase
+    ): FavoriteDao {
+        return db.favoriteDao()
     }
 }

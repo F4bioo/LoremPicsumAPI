@@ -1,24 +1,28 @@
 package com.fappslab.lorempicsumapi.data.repository
 
-import com.fappslab.lorempicsumapi.data.model.PhotoEntity
-import com.fappslab.lorempicsumapi.data.room.PhotosDatabase
+import com.fappslab.lorempicsumapi.data.model.FavoriteEntity
+import com.fappslab.lorempicsumapi.data.room.FavoriteDao
 import javax.inject.Inject
 
 class LocalRepository
 @Inject
 constructor(
-    private val db: PhotosDatabase
+    private val dao: FavoriteDao,
 ) : Repository.LocalData {
 
-    override suspend fun setFavorite(photo: PhotoEntity): Int {
-        return db.photoDao().setFavorite(photo = photo)
+    override suspend fun setFavorite(favorite: FavoriteEntity): Long {
+        return dao.setFavorite(favorite)
     }
 
-    override suspend fun getFavorite(id: Long): PhotoEntity {
-        return db.photoDao().getFavorite(id = id)
+    override suspend fun getFavorite(id: String): FavoriteEntity? {
+        return dao.getFavorite(id)
     }
 
-    override suspend fun getFavorites(): List<PhotoEntity> {
-        return db.photoDao().getFavorites()
+    override suspend fun getFavorites(): List<FavoriteEntity>? {
+        return dao.getFavorites()
+    }
+
+    override suspend fun delFavorite(favorite: FavoriteEntity): Int {
+        return dao.delFavorite(favorite)
     }
 }
