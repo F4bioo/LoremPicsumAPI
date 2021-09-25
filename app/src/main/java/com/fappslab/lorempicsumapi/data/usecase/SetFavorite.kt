@@ -14,7 +14,7 @@ constructor(
 
     override suspend fun invoke(params: Params): DataState<Boolean> {
         return try {
-            DataState.OnSuccess(repository.setFavorite(params.photo.fromPhotoToEntity()) != -1L)
+            DataState.OnSuccess(repository.setFavorite(params.photo.fromPhotoToEntity()) != -1)
         } catch (e: Exception) {
             DataState.OnException(e)
         }

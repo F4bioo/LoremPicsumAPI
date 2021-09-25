@@ -7,7 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.fappslab.lorempicsumapi.data.api.DataState
 import com.fappslab.lorempicsumapi.data.model.PhotoEntity
-import com.fappslab.lorempicsumapi.data.model.RemoteKeys
+import com.fappslab.lorempicsumapi.data.model.RemoteKeyEntity
 import com.fappslab.lorempicsumapi.data.room.PhotosDatabase
 import com.fappslab.lorempicsumapi.data.usecase.GetPhotos
 import com.fappslab.lorempicsumapi.utils.Constants
@@ -42,18 +42,18 @@ class PhotoRemoteMediator(
             db.withTransaction {
                 // clear all tables in the database
                 if (loadType == LoadType.REFRESH) {
-                    db.getKeysDao().deleteAll()
                     db.photoDao().deleteAll()
+                    db.getKeysDao().deleteAll()
                 }
 
                 val prevKey = if (page == Constants.PAGE_INDEX) null else page - 1
                 val nextKey = if (isEndOfList) null else page + 1
                 val keys = photos.map {
-                    RemoteKeys(it.id, prevKey = prevKey, nextKey = nextKey)
+                    RemoteKeyEntity(it.id, prevKey = prevKey, nextKey = nextKey)
                 }
 
-                db.getKeysDao().insertAll(keys)
                 db.photoDao().insertAll(photos.fromDomainsToEntities())
+                db.getKeysDao().insertAll(keys)
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
 
@@ -90,7 +90,7 @@ class PhotoRemoteMediator(
     }
 
     // get the closest remote key inserted which had the data
-    private suspend fun getClosestRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeys? {
+    private suspend fun getClosestRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeyEntity? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
                 db.getKeysDao().remoteKeysPhotoId(repoId)
@@ -99,7 +99,7 @@ class PhotoRemoteMediator(
     }
 
     // get the last remote key inserted which had the data
-    private suspend fun getLastRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeys? {
+    private suspend fun getLastRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeyEntity? {
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
             ?.data?.lastOrNull()
@@ -107,7 +107,7 @@ class PhotoRemoteMediator(
     }
 
     // get the first remote key inserted which had the data
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeys? {
+    private suspend fun getFirstRemoteKey(state: PagingState<Int, PhotoEntity>): RemoteKeyEntity? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()

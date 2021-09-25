@@ -87,13 +87,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 }, 500)
             }
         }
-
-        viewModel.deleteEvent.observe(viewLifecycleOwner) { dataState ->
-            if (dataState is DataState.OnSuccess) {
-                adapter.removeItemList(pos)
-                emptyLayout()
-            }
-        }
     }
 
     private fun initRecyclerView() {
