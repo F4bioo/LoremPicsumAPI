@@ -53,7 +53,7 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
             findNavController().popBackStack()
             return
         }
-
+        getFavorite()
         viewBinding()
         initObserver()
         initListeners()
@@ -65,12 +65,14 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
         _binding = null
     }
 
-    private fun initObserver() {
-        viewModel.getFavorite(photo.id.toLong())
+    private fun getFavorite() {
+        viewModel.getFavorite(photo.id)
+    }
 
+    private fun initObserver() {
         viewModel.selectEvent.observe(viewLifecycleOwner) { dataState ->
             if (dataState is DataState.OnSuccess) {
-                photo.favorite = dataState.data.favorite
+                photo.favorite = dataState.data
                 setFavoriteIcon(photo.favorite)
             }
         }
@@ -136,9 +138,10 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
 
     private fun setFavoriteIcon(isSelected: Boolean) {
         binding.apply {
-            if (isSelected) {
-                favorite.button.set(R.drawable.ic_favorite_selected, Color.RED)
-            } else favorite.button.set(R.drawable.ic_favorite_unselected, Color.WHITE)
+            when {
+                isSelected -> favorite.button.set(R.drawable.ic_favorite_selected, Color.RED)
+                else -> favorite.button.set(R.drawable.ic_favorite_unselected, Color.WHITE)
+            }
         }
     }
 
@@ -165,7 +168,10 @@ class ModalFragment : BottomSheetDialogFragment(), EasyPermissions.PermissionCal
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+        EasyPermissions.onRequestPermissionsResult(
+            requestCode, permissions,
+            grantResults, this
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

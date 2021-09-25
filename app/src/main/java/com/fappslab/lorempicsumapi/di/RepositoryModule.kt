@@ -4,8 +4,7 @@ import com.fappslab.lorempicsumapi.data.api.ApiService
 import com.fappslab.lorempicsumapi.data.repository.LocalRepository
 import com.fappslab.lorempicsumapi.data.repository.RemoteRepository
 import com.fappslab.lorempicsumapi.data.repository.Repository
-import com.fappslab.lorempicsumapi.data.room.PhotoDao
-import com.fappslab.lorempicsumapi.data.room.PhotosDatabase
+import com.fappslab.lorempicsumapi.data.room.FavoriteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,8 +26,8 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideLocalRepository(
-        db: PhotosDatabase
+        dao: FavoriteDao
     ): Repository.LocalData {
-        return LocalRepository(db)
+        return LocalRepository(dao)
     }
 }

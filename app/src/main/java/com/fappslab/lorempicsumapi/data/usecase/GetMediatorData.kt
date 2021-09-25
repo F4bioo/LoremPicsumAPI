@@ -29,7 +29,7 @@ constructor(
                 getPhotos = getPhotos,
                 db = db
             ),
-            pagingSourceFactory = { db.photoDao().getAll() }
+            pagingSourceFactory = { db.photoDao().getAllPhotos() }
         ).flow
     }
 }

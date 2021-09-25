@@ -9,11 +9,11 @@ import com.fappslab.lorempicsumapi.data.model.RemoteKeyEntity
 @Dao
 interface RemoteKeyDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(remoteKeys: List<RemoteKeyEntity>)
+    suspend fun setAllRemoteKeys(remoteKeys: List<RemoteKeyEntity>)
 
     @Query("SELECT * FROM remote_keys WHERE photoId = :id")
-    suspend fun remoteKeysPhotoId(id: String): RemoteKeyEntity?
+    suspend fun getRemoteKey(id: String): RemoteKeyEntity?
 
     @Query("DELETE FROM remote_keys")
-    suspend fun deleteAll()
+    suspend fun delAllRemoteKeys()
 }

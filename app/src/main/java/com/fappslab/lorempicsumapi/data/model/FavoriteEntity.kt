@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "photos")
-data class PhotoEntity(
+@Entity(tableName = "favorites")
+data class FavoriteEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     val id: String,
@@ -18,5 +18,7 @@ data class PhotoEntity(
     @ColumnInfo(name = "url")
     val url: String,
     @ColumnInfo(name = "download_url")
-    val downloadUrl: String
+    val downloadUrl: String,
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean = true
 )
