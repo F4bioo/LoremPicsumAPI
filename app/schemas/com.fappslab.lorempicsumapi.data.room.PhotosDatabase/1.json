@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6bbf9c9cc217d7b07b4be4a01b518598",
+    "identityHash": "cf431c608eb686434f24ac6cf86f075a",
     "entities": [
       {
-        "tableName": "photo",
+        "tableName": "photos",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `author` TEXT NOT NULL, `width` TEXT NOT NULL, `height` TEXT NOT NULL, `url` TEXT NOT NULL, `download_url` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -96,7 +96,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6bbf9c9cc217d7b07b4be4a01b518598')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cf431c608eb686434f24ac6cf86f075a')"
     ]
   }
 }
