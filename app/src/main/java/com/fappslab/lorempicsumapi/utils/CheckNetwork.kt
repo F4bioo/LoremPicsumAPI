@@ -3,6 +3,7 @@ package com.fappslab.lorempicsumapi.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CheckNetwork(
-    context: Context
+    private val context: Context
 ) : LiveData<Boolean>() {
 
     private val cnn by lazy {
@@ -64,6 +65,21 @@ class CheckNetwork(
             } catch (e: Exception) {
                 false
             }
+        }
+    }
+
+    // Returns true if is connected but that does not mean it has an internet connection
+    fun isConnected(): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val networkCapabilities = cm.activeNetwork ?: return false
+        val activeNetwork = cm.getNetworkCapabilities(networkCapabilities) ?: return false
+
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
         }
     }
 }
