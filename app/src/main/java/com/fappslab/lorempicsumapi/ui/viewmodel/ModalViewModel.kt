@@ -24,19 +24,19 @@ constructor(
     val insertEvent: LiveData<DataState<Boolean>>
         get() = _insertEvent
 
-    private val _selectEvent = MutableLiveData<DataState<Photo>>()
-    val selectEvent: LiveData<DataState<Photo>>
+    private val _selectEvent = MutableLiveData<DataState<Boolean>>()
+    val selectEvent: LiveData<DataState<Boolean>>
         get() = _selectEvent
 
-    fun getFavorite(id: Long) {
+    fun getFavorite(id: String) {
         viewModelScope.launch {
-            _selectEvent.value = getFavorite.invoke(GetFavorite.Params(id = id))
+            _selectEvent.value = getFavorite.invoke(GetFavorite.Params(id))
         }
     }
 
     fun setFavorite(photo: Photo) {
         viewModelScope.launch {
-            _insertEvent.value = setFavorite.invoke(SetFavorite.Params(photo = photo))
+            _insertEvent.value = setFavorite.invoke(SetFavorite.Params(photo))
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fappslab.lorempicsumapi.data.model.Photo
 import com.fappslab.lorempicsumapi.databinding.AdapterItemBinding
+import com.fappslab.lorempicsumapi.utils.extensions.bg
 import com.fappslab.lorempicsumapi.utils.extensions.set
 
 
@@ -49,6 +50,7 @@ class LocalAdapter(
         fun viewBiding(photo: Photo) {
             biding.apply {
                 imagePhoto.set(photo.downloadUrl)
+                imagePhoto.bg(progressPhotos)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
                 checkFavorite.isChecked = photo.favorite

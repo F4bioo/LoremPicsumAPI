@@ -10,11 +10,11 @@ class GetFavorites
 @Inject
 constructor(
     private val repository: LocalRepository
-) : BaseUseCase.Empty<DataState<List<Photo>>> {
+) : BaseUseCase.Empty<DataState<List<Photo>?>> {
 
-    override suspend fun invoke(): DataState<List<Photo>> {
+    override suspend fun invoke(): DataState<List<Photo>?> {
         return try {
-            DataState.OnSuccess(repository.getFavorites().fromEntitiesToPhotos())
+            DataState.OnSuccess(repository.getFavorites()?.fromEntitiesToPhotos())
         } catch (e: Exception) {
             DataState.OnException(e)
         }

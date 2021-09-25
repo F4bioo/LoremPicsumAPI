@@ -59,7 +59,7 @@ class RemoteAdapter(
                 imagePhoto.bg(progressPhotos)
                 textAuthor.text = photo.author
                 textId.text = String.format("#%s", photo.id)
-                checkFavorite.isFavorite(photo.id.toLong())
+                checkFavorite.isFavorite(photo.id)
 
                 itemView.setOnClickListener {
                     it.postDelayed({
@@ -75,11 +75,11 @@ class RemoteAdapter(
         }
     }
 
-    private fun CheckBox.isFavorite(id: Long) {
+    private fun CheckBox.isFavorite(id: String) {
         job = lifecycle.coroutineScope.launch {
             val dataState = getFavorite.invoke(GetFavorite.Params(id))
             isChecked = dataState is DataState.OnSuccess
-                    && dataState.data.favorite == true
+                    && dataState.data == true
         }
     }
 

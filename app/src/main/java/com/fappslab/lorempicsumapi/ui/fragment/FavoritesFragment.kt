@@ -73,7 +73,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             binding.swipeRefresh.isRefreshing = false
 
             if (dataState is DataState.OnSuccess) {
-                val photos = dataState.data.toMutableList()
+                val photos = dataState.data?.toMutableList()
                 adapter.clearList()
                 adapter.submitList(photos)
                 emptyLayout()
@@ -109,6 +109,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 findNavController().popBackStack()
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, callback)
     }
 }
