@@ -18,10 +18,7 @@ import com.fappslab.lorempicsumapi.utils.Constants.MODAL_GRAYSCALE
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_NORMAL
 import com.fappslab.lorempicsumapi.utils.Constants.MODAL_SAVE
 import com.fappslab.lorempicsumapi.utils.Utils
-import com.fappslab.lorempicsumapi.utils.extensions.bg
-import com.fappslab.lorempicsumapi.utils.extensions.getNavigationResult
-import com.fappslab.lorempicsumapi.utils.extensions.hideSystemUI
-import com.fappslab.lorempicsumapi.utils.extensions.set
+import com.fappslab.lorempicsumapi.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -115,6 +112,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun openModal() {
         val directions =
             DetailsFragmentDirections.actionDetailsFragmentToModalFragment(photo)
-        findNavController().navigate(directions)
+        findNavController().safelyNavigate(directions)
     }
 }

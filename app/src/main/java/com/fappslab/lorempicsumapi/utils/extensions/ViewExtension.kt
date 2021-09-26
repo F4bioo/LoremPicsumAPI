@@ -3,7 +3,6 @@ package com.fappslab.lorempicsumapi.utils.extensions
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
-import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.annotation.DrawableRes
@@ -13,9 +12,12 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.fappslab.lorempicsumapi.utils.Slide
 import com.google.android.material.button.MaterialButton
 import java.util.*
 
@@ -58,19 +60,11 @@ fun FragmentActivity.hideSystemUI(viewGroup: View) {
     }
 }
 
-fun View.networkToast(duration: Int = 500) {
-    TranslateAnimation(0f, 0f, height.toFloat(), 0f).let { animUp ->
-        animUp.duration = duration.toLong()
-        animUp.fillAfter = true
-        isVisible = true
-        startAnimation(animUp)
-    }
+fun View.networkToast() {
+    isVisible = true
+    startAnimation(Slide.animation(fromYDelta = height.toFloat(), toYDelta = 0f))
     postDelayed({
-        TranslateAnimation(0f, 0f, 0f, height.toFloat()).let { animDown ->
-            animDown.duration = duration.toLong()
-            animDown.fillAfter = true
-            startAnimation(animDown)
-        }
+        startAnimation(Slide.animation(fromYDelta = 0f, toYDelta = height.toFloat()))
     }, 3000)
 }
 
@@ -88,4 +82,9 @@ fun <T> Fragment.getNavigationResult(key: String = "defKey") =
 
 fun <T> Fragment.setNavigationResult(key: String = "defKey", result: T) {
     findNavController().previousBackStackEntry?.savedStateHandle?.set(key, result)
+}
+
+fun NavController.safelyNavigate(directions: NavDirections) = try {
+    navigate(directions)
+} catch (e: Exception) {
 }

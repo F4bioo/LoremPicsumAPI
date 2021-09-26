@@ -46,7 +46,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     lateinit var checkNetwork: CheckNetwork
 
     private val adapter by lazy {
-        RemoteAdapter(lifecycle, getFavorite) { view, photo, position ->
+        RemoteAdapter(lifecycle, getFavorite) { view, photo, _ ->
             when (view.id) {
                 R.id.check_favorite -> {
                     viewModel.setFavorite(photo)
@@ -68,6 +68,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         initRecyclerView()
         initListeners()
         handleOnBackPressed()
+        networkRules()
     }
 
     override fun onDestroyView() {
@@ -83,16 +84,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         checkNetwork.observe(viewLifecycleOwner) { hasConnection ->
-            binding.apply {
-                if (!hasConnection) {
-                    networkToastConfig(R.color.red, getString(R.string.connection_lost))
-                    auxCnnLost = false
-                } else if (hasConnection && !auxCnnLost) {
-                    networkToastConfig(R.color.green, getString(R.string.connected))
-                    swipeRefresh.swipe()
-                    auxCnnLost = true
-                }
-            }
+            networkRules(hasConnection)
         }
     }
 
@@ -111,7 +103,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun initListeners() {
         binding.apply {
             swipeRefresh.setOnRefreshListener {
-                adapter.refresh()
+                viewModel.getPhotosFromMediator()
             }
 
             fab.setOnClickListener {
@@ -161,6 +153,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 ).apply {
                     setAction(getString(R.string.ok)) { dismiss() }
                 }.show()
+            }
+        }
+    }
+
+    private fun networkRules(hasConnection: Boolean = checkNetwork.isConnected()) {
+        binding.apply {
+            if (!hasConnection) {
+                networkToastConfig(R.color.red, getString(R.string.connection_lost))
+                auxCnnLost = false
+            } else if (hasConnection && !auxCnnLost) {
+                networkToastConfig(R.color.green, getString(R.string.connected))
+                swipeRefresh.swipe()
+                auxCnnLost = true
             }
         }
     }

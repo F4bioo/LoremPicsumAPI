@@ -60,7 +60,7 @@ constructor(
         }
     }
 
-    private fun getPhotosFromMediator() {
+    fun getPhotosFromMediator() {
         viewModelScope.launch {
             getMediatorData.invoke().cachedIn(viewModelScope).collect {
                 _pagingEvent.value = it.map { entity ->
