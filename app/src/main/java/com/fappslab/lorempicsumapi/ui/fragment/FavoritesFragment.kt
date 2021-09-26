@@ -14,6 +14,8 @@ import com.fappslab.lorempicsumapi.databinding.FragmentFavoritesBinding
 import com.fappslab.lorempicsumapi.ui.adapter.LocalAdapter
 import com.fappslab.lorempicsumapi.ui.viewmodel.FavoritesViewModel
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
+import com.fappslab.lorempicsumapi.utils.extensions.safelyNavigate
+import com.fappslab.lorempicsumapi.utils.extensions.safelyNavigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +36,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 else -> {
                     val directions =
                         FavoritesFragmentDirections.actionFavoritesFragmentToDetailsFragment(photo)
-                    findNavController().navigateWithAnimations(directions)
+                    findNavController().safelyNavigateWithAnimations(directions)
                 }
             }
         }

@@ -24,6 +24,7 @@ import com.fappslab.lorempicsumapi.ui.viewmodel.MainViewModel
 import com.fappslab.lorempicsumapi.utils.CheckNetwork
 import com.fappslab.lorempicsumapi.utils.extensions.navigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.networkToast
+import com.fappslab.lorempicsumapi.utils.extensions.safelyNavigateWithAnimations
 import com.fappslab.lorempicsumapi.utils.extensions.showSystemUI
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 else -> {
                     val directions =
                         MainFragmentDirections.actionMainFragmentToDetailsFragment(photo)
-                    findNavController().navigateWithAnimations(directions)
+                    findNavController().safelyNavigateWithAnimations(directions)
                 }
             }
         }

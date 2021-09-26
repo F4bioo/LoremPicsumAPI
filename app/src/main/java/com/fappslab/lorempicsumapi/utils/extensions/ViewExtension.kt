@@ -88,3 +88,8 @@ fun NavController.safelyNavigate(directions: NavDirections) = try {
     navigate(directions)
 } catch (e: Exception) {
 }
+
+fun NavController.safelyNavigateWithAnimations(directions: NavDirections) = try {
+    navigateWithAnimations(directions)
+} catch (e: Exception) {
+}
