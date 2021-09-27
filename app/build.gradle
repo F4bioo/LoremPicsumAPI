@@ -50,7 +50,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
@@ -91,11 +91,10 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
 
     // Tests
-    testImplementation "dev.thiagosouto:file-butler:0.3.0"
-    testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation 'org.mockito:mockito-core:3.9.0'
-    testImplementation 'org.mockito:mockito-inline:3.9.0'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:3.1.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation "dev.thiagosouto:file-butler:0.3.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
