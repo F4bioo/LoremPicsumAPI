@@ -4,7 +4,7 @@
 - Hilt Dependency Injection
 - MVVM Architecture
 - FileProvider
-- Paging 3, LoadStateAdapter
+- Paging 3, LoadStateAdapter, RemoteMediator
 - ListAdapter 
 - Navigation, single Activity architecture
 - SafeArgs
